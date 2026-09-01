@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Material original entregado por el cliente (sin comprimir)
+media/
+media.zip
+
+# Vídeos servidos: pendientes de compresión antes de versionarlos
+public/media/*.mp4
