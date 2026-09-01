@@ -49,13 +49,10 @@ export default function ModelModal({ model, onClose }: ModelModalProps) {
     >
       <div className="relative w-full max-w-3xl overflow-hidden rounded-t-3xl border border-ink-line bg-ink-soft duration-500 animate-in slide-in-from-bottom-8 sm:rounded-3xl">
         <div className="relative h-52 overflow-hidden sm:h-64">
-          <video
+          <img
             className="size-full object-cover"
-            src={model.video}
-            autoPlay
-            muted
-            loop
-            playsInline
+            src={model.image}
+            alt={`Yooudooo 6 ${model.trim} ${model.fuel}`}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-soft via-ink-soft/30 to-transparent" />
 

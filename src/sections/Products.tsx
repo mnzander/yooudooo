@@ -32,14 +32,11 @@ export default function Products() {
                 className="flex h-full w-full cursor-pointer flex-col text-left"
               >
                 <div className="relative aspect-[16/11] overflow-hidden">
-                  <video
+                  <img
                     className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    src={model.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
+                    src={model.image}
+                    alt={`Yooudooo 6 ${model.trim} ${model.fuel}`}
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-card via-ink-card/20 to-transparent" />
 

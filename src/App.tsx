@@ -2,7 +2,9 @@ import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Particles from '@/components/Particles'
 import Nav from '@/components/Nav'
+import NegativeCursor from '@/components/NegativeCursor'
 import Hero from '@/sections/Hero'
+import Stats from '@/sections/Stats'
 import About from '@/sections/About'
 import Products from '@/sections/Products'
 import Contact from '@/sections/Contact'
@@ -42,10 +44,13 @@ export default function App() {
 
       <main>
         <Hero />
+        <Stats />
         <About />
         <Products />
         <Contact />
       </main>
+
+      <NegativeCursor />
     </>
   )
 }

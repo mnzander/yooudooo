@@ -14,7 +14,7 @@ export interface CarModel {
   torque: string
   consumption: string
   price?: string
-  video: string
+  image: string
   highlights: string[]
   specs: SpecGroup[]
 }
@@ -56,7 +56,7 @@ export const models: CarModel[] = [
     torque: '410 N·m',
     consumption: '11 L/100 km',
     price: 'Desde 39.300 €',
-    video: '/media/yudoo-2.mp4',
+    image: '/media/modelos/y6-gasolina.jpg',
     highlights: ['2.0T turbo inyección directa', 'Cambio 8AT', 'Bloqueo diferencial trasero'],
     specs: [
       {
@@ -90,7 +90,7 @@ export const models: CarModel[] = [
     powerKw: 122,
     torque: 'Alto par a bajas vueltas',
     consumption: '7,6 L/100 km',
-    video: '/media/yudoo-4.mp4',
+    image: '/media/modelos/y6-diesel.jpg',
     highlights: ['2.0L diésel', 'Cambio 8AT ZF', 'Consumo 7,6 L/100 km'],
     specs: [
       {
@@ -123,7 +123,7 @@ export const models: CarModel[] = [
     powerKw: 160,
     torque: '410 N·m',
     consumption: '11 L/100 km',
-    video: '/media/yudoo-3.mp4',
+    image: '/media/modelos/y6-navigator.jpg',
     highlights: ['Doble bloqueo de diferencial', 'Amortiguadores de nitrógeno', '2.0T · 217 CV'],
     specs: [
       {

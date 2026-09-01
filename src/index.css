@@ -85,6 +85,18 @@
     background: var(--color-lime);
     color: #050505;
   }
+
+  /* El puntero propio sustituye al del sistema solo cuando NegativeCursor está activo */
+  .has-custom-cursor,
+  .has-custom-cursor * {
+    cursor: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
 
 @utility text-accent-italic {
