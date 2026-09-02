@@ -38,16 +38,13 @@ export default function Hero() {
             Yooudooo 212 · {dealer.region}
           </span>
 
-          <h1 className="font-display text-[clamp(1.75rem,4.1vw,3.5rem)] font-black text-balance text-white [text-shadow:0_4px_40px_rgba(0,0,0,0.6)]">
-            El único concesionario oficial de Yooudooo en{' '}
-            <span className="text-lime">Bizkaia</span>
+          <h1 className="font-display text-[clamp(2rem,4.6vw,4rem)] font-black text-balance text-white [text-shadow:0_4px_40px_rgba(0,0,0,0.6)]">
+            El único concesionario en <span className="text-lime">Bizkaia</span>
           </h1>
 
-          <p className="max-w-2xl text-sm leading-relaxed text-balance text-white/70 sm:text-base">
-            Hazte con un todoterreno que redefine la libertad de la mano de {dealer.company}, un
-            equipo que acompaña al cliente antes, durante y después de la compra. Asesoramiento sin
-            prisas, entrega con garantía oficial de {dealer.warrantyYears} años y un servicio
-            postventa propio en {dealer.city}.
+          <p className="max-w-xl text-balance text-base text-white/70 sm:text-lg">
+            Venta oficial del Yooudooo 6 con {dealer.warrantyYears} años de garantía y servicio
+            postventa propio en Bilbao.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3">

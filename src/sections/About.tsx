@@ -18,15 +18,13 @@ export default function About() {
             containerClassName="!my-0"
             textClassName="!text-[clamp(1.3rem,2.4vw,1.9rem)] !font-medium !leading-[1.4] font-sans text-white"
           >
-            Traemos la marca Yooudooo a Bizkaia con un trato cercano: te enseñamos el coche sin
-            prisas, resolvemos cada duda y seguimos ahí después de la entrega.
+            {`Hazte con un todoterreno que redefine la libertad de la mano de ${dealer.company}, un equipo que acompaña al cliente antes, durante y después de la compra.`}
           </ScrollReveal>
 
           <AnimatedContent distance={60} duration={0.9} delay={0.1}>
             <p className="mt-8 text-base leading-relaxed text-white/55">
-              Somos el punto oficial de la marca en el territorio, así que no tienes que salir de
-              Bizkaia para comprar, revisar ni reparar tu vehículo. Todo se gestiona desde nuestras
-              instalaciones en {dealer.street}, {dealer.city}.
+              Asesoramiento sin prisas, entrega con garantía oficial de {dealer.warrantyYears} años
+              y un servicio postventa propio en {dealer.street}, {dealer.city}.
             </p>
 
             <a
