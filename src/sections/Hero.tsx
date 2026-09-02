@@ -1,19 +1,47 @@
+import { useEffect, useState } from 'react'
 import { ArrowDown, MapPin } from 'lucide-react'
 import ScrollExpand from '@/components/ScrollExpand'
 import BlurText from '@/components/BlurText'
 import RotatingText from '@/components/RotatingText'
 import { dealer } from '@/data/models'
 
+const PAGE_GUTTER = 24 // px-6, el margen lateral del resto de secciones
+
+/**
+ * El marco de partida en porcentaje del viewport. Un valor fijo se queda
+ * ridículamente estrecho en móvil (38 % de 375 px son 142 px), así que en
+ * pantallas pequeñas arranca al ancho de los márgenes de la página y sólo se
+ * estrecha en pantallas grandes, donde hace falta recorrido para que la
+ * expansión se note.
+ */
+function getStartFrame(vw: number) {
+  const gutterPct = (PAGE_GUTTER / vw) * 100
+  if (vw < 640) return { width: 100 - gutterPct * 2, height: 52, radius: 20 }
+  if (vw < 1024) return { width: 74, height: 58, radius: 24 }
+  return { width: 46, height: 64, radius: 28 }
+}
+
 export default function Hero() {
+  const [frame, setFrame] = useState(() =>
+    getStartFrame(typeof window === 'undefined' ? 1440 : window.innerWidth)
+  )
+
+  useEffect(() => {
+    const onResize = () => setFrame(getStartFrame(window.innerWidth))
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   return (
     <section id="inicio" className="relative">
       <ScrollExpand
         useWindowScroll
         mediaType="video"
         src="/media/hero.mp4"
-        startWidth={38}
-        startHeight={64}
-        startRadius={28}
+        startWidth={frame.width}
+        startHeight={frame.height}
+        startRadius={frame.radius}
         mediaZoom={1.45}
         scrollDistance={1.15}
         holdDistance={0.85}
