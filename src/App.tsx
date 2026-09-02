@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from '@/components/Nav'
-import BrandCursor from '@/components/BrandCursor'
+import NegativeCursor from '@/components/NegativeCursor'
 import GarageReveal from '@/components/GarageReveal'
 import Hero from '@/sections/Hero'
 import Stats from '@/sections/Stats'
@@ -53,7 +53,7 @@ export default function App() {
 
       <Footer />
 
-      <BrandCursor />
+      <NegativeCursor />
     </>
   )
 }
