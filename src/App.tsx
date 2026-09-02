@@ -38,11 +38,13 @@ export default function App() {
         <Stats />
         <About />
 
-        {/* Bloque claro: productos y contacto sobre blanco hueso */}
+        {/* Bloque claro: productos y contacto, con fundido a cada lado */}
+        <div aria-hidden className="fade-ink-to-bone h-32 w-full sm:h-48" />
         <div className="relative bg-bone text-ink">
           <Products />
           <Contact />
         </div>
+        <div aria-hidden className="fade-bone-to-ink h-32 w-full sm:h-48" />
       </main>
 
       <Footer />

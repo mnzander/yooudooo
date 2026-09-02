@@ -105,6 +105,37 @@
   }
 }
 
+/* Transiciones negro↔hueso. Las paradas intermedias siguen una curva suave:
+   un degradado de dos paradas cruza los grises medios demasiado rápido y se
+   percibe como una banda sucia en vez de un fundido. */
+@utility fade-ink-to-bone {
+  background: linear-gradient(
+    to bottom,
+    #050505 0%,
+    #090908 18%,
+    #1c1c19 36%,
+    #43433e 54%,
+    #7c7c74 70%,
+    #b5b5ac 83%,
+    #dedeD6 93%,
+    #f4f4f0 100%
+  );
+}
+
+@utility fade-bone-to-ink {
+  background: linear-gradient(
+    to bottom,
+    #f4f4f0 0%,
+    #dedeD6 7%,
+    #b5b5ac 17%,
+    #7c7c74 30%,
+    #43433e 46%,
+    #1c1c19 64%,
+    #090908 82%,
+    #050505 100%
+  );
+}
+
 /* Grano de película: SVG inline, sin peticiones de red ni canvas */
 @utility grain-layer {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
