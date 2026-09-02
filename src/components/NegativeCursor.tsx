@@ -17,11 +17,19 @@ export default function NegativeCursor() {
   const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
-    const query = window.matchMedia('(pointer: fine)')
+    // Sólo escritorio: "pointer: fine" por sí solo lo activaría también en un
+    // iPad con trackpad, así que se exige además hover real y pantalla grande.
+    const query = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1024px)')
     const apply = () => setEnabled(query.matches)
     apply()
     query.addEventListener('change', apply)
-    return () => query.removeEventListener('change', apply)
+    // Respaldo: si "change" no llega, la página se quedaría con cursor: none y
+    // sin puntero visible, así que se reevalúa también al redimensionar.
+    window.addEventListener('resize', apply)
+    return () => {
+      query.removeEventListener('change', apply)
+      window.removeEventListener('resize', apply)
+    }
   }, [])
 
   useEffect(() => {
