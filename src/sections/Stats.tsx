@@ -17,7 +17,7 @@ export default function Stats() {
               <CountUp to={stat.to} duration={2} />
               {stat.suffix ? <span className="ml-2 text-[0.45em]">{stat.suffix}</span> : null}
             </p>
-            <p className="mx-auto mt-4 max-w-[16ch] text-xs font-semibold tracking-[0.22em] text-white/55 uppercase">
+            <p className="mx-auto mt-4 max-w-[16ch] text-xs font-semibold tracking-[0.22em] text-white/70 uppercase">
               {stat.label}
             </p>
           </div>
