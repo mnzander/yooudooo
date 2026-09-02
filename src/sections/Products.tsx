@@ -11,7 +11,7 @@ export default function Products() {
   const [selected, setSelected] = useState<CarModel | null>(null)
 
   return (
-    <section id="productos" className="relative mx-auto max-w-7xl px-6 pt-12 pb-28 sm:pt-16 sm:pb-36">
+    <section id="productos" className="relative mx-auto max-w-7xl px-6 pt-20 pb-28 sm:pt-28 sm:pb-36">
       <SectionHeading index="02" label="Productos" title="Yooudooo 6" tone="light" />
 
       <BlurText

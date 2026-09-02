@@ -24,12 +24,17 @@ const perks = [
 export default function Contact() {
   return (
     <section id="contacto" className="relative mx-auto max-w-7xl px-6 pb-28 sm:pb-36">
-      {/* Manchas de color que el backdrop-blur de las tarjetas difumina:
-          sobre un fondo liso el efecto glass no se apreciaría */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/3 -right-20 size-[28rem] rounded-full bg-lime/25 blur-[110px]" />
-        <div className="absolute right-1/4 bottom-0 size-[22rem] rounded-full bg-moss/20 blur-[100px]" />
-        <div className="absolute top-1/2 left-1/3 size-[18rem] rounded-full bg-ink/10 blur-[90px]" />
+      {/* El glass necesita algo con detalle detrás: sobre un fondo liso no se
+          difumina nada y las tarjetas parecen mal renderizadas. */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-40 bottom-0 overflow-hidden rounded-[2.5rem]">
+        <img
+          src="/media/modelos/y6-navigator.jpg"
+          alt=""
+          className="size-full scale-110 object-cover opacity-45 saturate-[0.85]"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-bone/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-bone via-transparent to-bone/90" />
       </div>
 
       <SectionHeading index="03" label="Contacto" title="Hablemos" tone="light" />
@@ -43,7 +48,7 @@ export default function Contact() {
         {/* Tarjeta oscura: ancla la identidad de marca dentro del bloque claro
             y es el único sitio donde el lima tiene contraste suficiente */}
         <AnimatedContent distance={70} duration={0.9} className="lg:h-full">
-          <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-ink/85 p-9 shadow-[0_20px_60px_-25px_rgba(5,5,5,0.5)] backdrop-blur-2xl sm:p-12">
+          <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/15 bg-ink/80 p-9 shadow-[0_30px_70px_-30px_rgba(5,5,5,0.75)] backdrop-blur-xl backdrop-saturate-150 sm:p-12">
             <div className="absolute -top-32 -right-32 size-80 rounded-full bg-lime/10 blur-3xl" />
 
             <p className="relative text-xs font-semibold tracking-[0.3em] text-lime uppercase">
@@ -97,7 +102,7 @@ export default function Contact() {
               href={mapsUrl}
               target="_blank"
               rel="noreferrer"
-              className="group flex items-start justify-between gap-6 rounded-3xl border border-white/70 bg-white/55 p-9 shadow-[0_12px_40px_-20px_rgba(5,5,5,0.35)] backdrop-blur-2xl transition-colors duration-500 hover:border-ink/25 hover:bg-white/75"
+              className="group flex items-start justify-between gap-6 rounded-3xl border border-white/80 bg-white/45 p-9 shadow-[0_20px_50px_-25px_rgba(5,5,5,0.45)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-500 hover:border-white hover:bg-white/65"
             >
               <div>
                 <MapPin className="size-6 text-moss" strokeWidth={1.8} />
@@ -120,7 +125,7 @@ export default function Contact() {
               duration={0.85}
               delay={0.24 + i * 0.12}
             >
-              <article className="flex h-full items-start gap-5 rounded-3xl border border-white/70 bg-white/55 p-9 shadow-[0_12px_40px_-20px_rgba(5,5,5,0.35)] backdrop-blur-2xl transition-colors duration-500 hover:border-ink/25 hover:bg-white/75">
+              <article className="flex h-full items-start gap-5 rounded-3xl border border-white/80 bg-white/45 p-9 shadow-[0_20px_50px_-25px_rgba(5,5,5,0.45)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-500 hover:border-white hover:bg-white/65">
                 <perk.icon className="mt-0.5 size-6 shrink-0 text-moss" strokeWidth={1.8} />
                 <div>
                   <h3 className="text-xl text-ink">{perk.title}</h3>

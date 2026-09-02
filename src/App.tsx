@@ -38,13 +38,13 @@ export default function App() {
         <Stats />
         <About />
 
-        {/* Bloque claro: productos y contacto, con fundido a cada lado */}
-        <div aria-hidden className="fade-ink-to-bone h-32 w-full sm:h-48" />
-        <div className="relative bg-bone text-ink">
+        {/* El bloque claro monta sobre la sección anterior con esquinas redondeadas:
+            un degradado negro→blanco cruza los grises medios y se lee como una
+            banda sucia, no como un fundido. */}
+        <div className="relative z-10 -mt-6 rounded-t-[2rem] bg-bone text-ink shadow-[0_-30px_60px_-30px_rgba(0,0,0,0.8)] sm:-mt-10 sm:rounded-t-[3.5rem]">
           <Products />
           <Contact />
         </div>
-        <div aria-hidden className="fade-bone-to-ink h-32 w-full sm:h-48" />
       </main>
 
       <Footer />

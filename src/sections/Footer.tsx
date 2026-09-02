@@ -13,8 +13,8 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
 export default function Footer() {
   return (
-    <footer className="relative bg-ink">
-      <div className="mx-auto max-w-7xl px-6 py-20">
+    <footer className="relative z-20 -mt-6 rounded-t-[2rem] bg-ink sm:-mt-10 sm:rounded-t-[3.5rem]">
+      <div className="mx-auto max-w-7xl px-6 pt-20 pb-16">
         <div className="grid gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
             <a href="#inicio" className="inline-flex min-h-11 items-baseline gap-2.5 py-1">
