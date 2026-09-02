@@ -31,7 +31,7 @@ export default function About() {
 
             <a
               href={`tel:${dealer.phoneLink}`}
-              className="mt-9 inline-flex items-center gap-2.5 rounded-full border border-lime/40 bg-lime/10 px-6 py-3 text-sm font-bold tracking-wide text-lime uppercase transition-all duration-300 hover:border-lime hover:bg-lime hover:text-ink"
+              className="mt-9 inline-flex min-h-11 items-center gap-2.5 rounded-full border border-lime/40 bg-lime/10 px-6 text-sm font-bold tracking-wide text-lime uppercase transition-all duration-300 hover:border-lime hover:bg-lime hover:text-ink"
             >
               <Phone className="size-4" strokeWidth={2.4} />
               {dealer.phone}

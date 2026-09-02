@@ -78,7 +78,7 @@ export default function ModelModal({ model, onClose }: ModelModalProps) {
             {quickFacts.map(fact => (
               <div key={fact.label} className="rounded-xl bg-ink-card/70 p-4">
                 <fact.icon className="size-4 text-lime" strokeWidth={1.8} />
-                <p className="mt-3 text-[0.65rem] tracking-[0.15em] text-white/40 uppercase">
+                <p className="mt-3 text-xs tracking-[0.15em] text-white/40 uppercase">
                   {fact.label}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-white">{fact.value}</p>

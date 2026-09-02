@@ -35,7 +35,11 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <a href="#inicio" className="flex items-baseline gap-2" onClick={() => setOpen(false)}>
+        <a
+          href="#inicio"
+          className="-my-2 flex min-h-11 items-baseline gap-2 py-2"
+          onClick={() => setOpen(false)}
+        >
           <span className="text-accent-italic text-2xl leading-none text-lime">212</span>
           <span className="font-display text-sm font-bold tracking-[0.2em] text-white/90 uppercase">
             Bizkaia
@@ -47,9 +51,11 @@ export default function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="relative py-1 text-sm font-medium text-white/65 transition-colors duration-300 hover:text-white after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-lime after:transition-transform after:duration-300 hover:after:scale-x-100"
+                className="group flex min-h-11 items-center text-sm font-medium text-white/65 transition-colors duration-300 hover:text-white"
               >
-                {link.label}
+                <span className="relative after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-lime after:transition-transform after:duration-300 group-hover:after:scale-x-100">
+                  {link.label}
+                </span>
               </a>
             </li>
           ))}
@@ -58,7 +64,7 @@ export default function Nav() {
         <div className="flex items-center gap-2">
           <a
             href={`tel:${dealer.phoneLink}`}
-            className="flex items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 py-2 text-sm font-semibold text-lime transition-all duration-300 hover:border-lime hover:bg-lime hover:text-ink"
+            className="flex min-h-11 items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 text-sm font-semibold text-lime transition-all duration-300 hover:border-lime hover:bg-lime hover:text-ink"
           >
             <Phone className="size-4" strokeWidth={2.4} />
             <span className="hidden sm:inline">{dealer.phone}</span>
@@ -69,7 +75,7 @@ export default function Nav() {
             onClick={() => setOpen(v => !v)}
             aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={open}
-            className="rounded-full border border-white/15 p-2.5 text-white transition-colors duration-300 hover:border-white/40 md:hidden"
+            className="grid size-11 place-items-center rounded-full border border-white/15 text-white transition-colors duration-300 hover:border-white/40 md:hidden"
           >
             {open ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>

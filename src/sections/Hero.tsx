@@ -20,7 +20,7 @@ export default function Hero() {
         overlayScrim={0.6}
         title={
           <span className="flex flex-col items-center gap-[0.55em]">
-            <span className="font-display text-[0.17em] leading-none font-semibold tracking-[0.4em] text-white/60 uppercase">
+            <span className="font-display text-[max(0.75rem,0.17em)] leading-none font-semibold tracking-[0.35em] text-white/60 uppercase">
               {dealer.company}
             </span>
             <span className="font-display leading-[0.9] font-black tracking-[-0.04em] uppercase">
@@ -36,7 +36,7 @@ export default function Hero() {
         }
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7">
-          <span className="flex items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 py-1.5 text-[0.7rem] font-semibold tracking-[0.25em] text-lime uppercase backdrop-blur-sm">
+          <span className="flex items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-lime uppercase backdrop-blur-sm">
             Yooudooo 6
             <span className="text-lime/40">·</span>
             <RotatingText

@@ -9,18 +9,15 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section
-      aria-label="Cifras de Yooudooo 212 Bizkaia"
-      className="relative border-y border-ink-line bg-ink-soft/80 backdrop-blur-sm"
-    >
-      <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-ink-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+    <section aria-label="Cifras de Yooudooo 212 Bizkaia" className="relative">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-12 px-6 py-20 sm:grid-cols-3 sm:py-24">
         {stats.map(stat => (
-          <div key={stat.label} className="px-6 py-12 text-center sm:py-16">
-            <p className="text-accent-italic text-[clamp(3rem,7vw,5.5rem)] leading-none text-lime">
+          <div key={stat.label} className="text-center">
+            <p className="text-accent-italic text-[clamp(3.25rem,7vw,5.5rem)] leading-none text-lime">
               <CountUp to={stat.to} duration={2} />
               {stat.suffix ? <span className="ml-2 text-[0.45em]">{stat.suffix}</span> : null}
             </p>
-            <p className="mt-4 text-xs font-semibold tracking-[0.25em] text-white/45 uppercase">
+            <p className="mx-auto mt-4 max-w-[16ch] text-xs font-semibold tracking-[0.22em] text-white/45 uppercase">
               {stat.label}
             </p>
           </div>

@@ -22,7 +22,7 @@ export default function Products() {
         className="mt-8 max-w-2xl text-base leading-relaxed text-white/55"
       />
 
-      <div className="mt-16 grid gap-5 md:grid-cols-3">
+      <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {models.map((model, i) => (
           <AnimatedContent key={model.id} distance={90} duration={0.9} delay={i * 0.14} scale={0.97}>
             <SpotlightCard
@@ -45,7 +45,7 @@ export default function Products() {
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-card via-ink-card/20 to-transparent" />
 
                   <span
-                    className={`absolute top-4 left-4 rounded-full border px-3 py-1 text-[0.65rem] font-semibold tracking-[0.18em] uppercase backdrop-blur-sm ${
+                    className={`absolute top-4 left-4 rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.18em] uppercase backdrop-blur-sm ${
                       model.fuel === 'Diésel'
                         ? 'border-white/30 bg-ink/50 text-white'
                         : 'border-lime/50 bg-lime/15 text-lime'
@@ -79,7 +79,7 @@ export default function Products() {
 
                   <div className="mt-auto flex items-end justify-between gap-4 border-t border-ink-line pt-6">
                     <div>
-                      <p className="text-[0.65rem] tracking-[0.15em] text-white/35 uppercase">
+                      <p className="text-xs tracking-[0.15em] text-white/35 uppercase">
                         Potencia
                       </p>
                       <p className="text-accent-italic mt-1 text-3xl text-lime">

@@ -1,8 +1,5 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-// El fondo es decorativo y arrastra el shader de OGL: fuera del bundle inicial.
-const Topography = lazy(() => import('@/components/Topography'))
 import Nav from '@/components/Nav'
 import NegativeCursor from '@/components/NegativeCursor'
 import Hero from '@/sections/Hero'
@@ -26,30 +23,11 @@ export default function App() {
 
   return (
     <>
-      {/* Curvas de nivel: el lenguaje visual del terreno, acorde a un todoterreno */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        <Suspense fallback={null}>
-          <Topography
-            colorMode="elevation"
-            lowColor="#1d2600"
-            midColor="#6f8c00"
-            highColor="#b9e901"
-            speed={0.14}
-            morphAmount={2.2}
-            morphSpeed={0.03}
-            bands={2.4}
-            thickness={0.006}
-            scale={1.15}
-            glow={0.35}
-            contrast={2.4}
-            brightness={0.85}
-            opacity={0.28}
-            grain
-            grainIntensity={0.035}
-            mouseInteraction={false}
-          />
-        </Suspense>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(185,233,1,0.05),transparent_60%)]" />
+      {/* Fondo plano: halo tenue de marca + grano, sin shader que compita con el contenido */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-ink">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,rgba(185,233,1,0.07),transparent_65%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_110%,rgba(185,233,1,0.04),transparent_60%)]" />
+        <div className="grain-layer absolute -inset-[50%] opacity-[0.035]" />
       </div>
 
       <Nav />
