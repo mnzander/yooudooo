@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from '@/components/Nav'
 import NegativeCursor from '@/components/NegativeCursor'
+import BackToTop from '@/components/BackToTop'
 import GarageReveal from '@/components/GarageReveal'
 import Hero from '@/sections/Hero'
 import Stats from '@/sections/Stats'
@@ -53,6 +54,7 @@ export default function App() {
 
       <Footer />
 
+      <BackToTop />
       <NegativeCursor />
     </>
   )

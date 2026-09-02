@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
 import AnimatedContent from '@/components/AnimatedContent'
 import BlurText from '@/components/BlurText'
 import SpotlightCard from '@/components/SpotlightCard'
@@ -53,14 +52,11 @@ export default function Products() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-7">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-2xl text-ink">{model.name}</h3>
-                      <p className="mt-1 text-sm font-semibold tracking-[0.15em] text-moss uppercase">
-                        {model.trim}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="size-5 shrink-0 text-ink/35 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-moss" />
+                  <div>
+                    <h3 className="text-2xl text-ink">{model.name}</h3>
+                    <p className="mt-1 text-sm font-semibold tracking-[0.15em] text-moss uppercase">
+                      {model.trim}
+                    </p>
                   </div>
 
                   <p className="mt-4 text-sm leading-relaxed text-ink/60">{model.tagline}</p>

@@ -92,6 +92,36 @@
     color: #050505;
   }
 
+  /* Barra de scroll de marca: negra de fondo y lima el pulgar. Se aplica a
+     cualquier zona con scroll, incluido el cuerpo de los modales. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-lime) var(--color-ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-lime);
+    border: 2px solid var(--color-ink);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-lime-bright);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--color-ink);
+  }
+
   /* El puntero propio sustituye al del sistema solo cuando NegativeCursor está activo */
   .has-custom-cursor,
   .has-custom-cursor * {
