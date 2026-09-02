@@ -33,7 +33,7 @@ export default function GarageReveal({ children }: GarageRevealProps) {
         layer,
         { opacity: 0.06 },
         {
-          opacity: 0.85,
+          opacity: 0.62,
           ease: 'none',
           scrollTrigger: { trigger: root, start: 'top bottom', end: 'center center', scrub: 0.6 },
         }
@@ -60,15 +60,14 @@ export default function GarageReveal({ children }: GarageRevealProps) {
           ref={imgRef}
           src="/media/modelos/y6-diesel.jpg"
           alt=""
-          className="size-full object-cover object-center grayscale will-change-transform"
+          className="size-full object-cover object-center will-change-transform"
           loading="lazy"
         />
-        {/* La foto es de exterior: sin cielo ni arena a la vista, el ojo lee
-            penumbra en vez de desierto. La ventana deja sólo el frontal. */}
-        <div className="absolute inset-0 bg-ink/72" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_38%_30%_at_50%_56%,transparent_0%,rgba(5,5,5,0.45)_34%,rgba(5,5,5,0.86)_60%,#050505_80%)]" />
-        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-ink to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ink to-transparent" />
+        {/* Penumbra: velo plano + viñeta que apaga los bordes y deja sólo el frontal */}
+        <div className="absolute inset-0 bg-ink/66" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_50%_48%,transparent_0%,rgba(5,5,5,0.55)_45%,rgba(5,5,5,0.92)_78%,#050505_100%)]" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
       </div>
 
       <div className="relative">{children}</div>

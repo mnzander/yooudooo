@@ -20,7 +20,7 @@ export default function SectionHeading({ index, label, title, tone = 'dark' }: S
         <span className={`h-px w-10 ${isLight ? 'bg-moss/40' : 'bg-lime/50'}`} />
         <span
           className={`text-xs font-semibold tracking-[0.3em] uppercase ${
-            isLight ? 'text-ink/60' : 'text-white/70'
+            isLight ? 'text-ink/60' : 'text-white/55'
           }`}
         >
           {label}
