@@ -13,11 +13,11 @@ export default function Stats() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-12 px-6 py-20 sm:grid-cols-3 sm:py-24">
         {stats.map(stat => (
           <div key={stat.label} className="text-center">
-            <p className="text-accent-italic text-[clamp(3.25rem,7vw,5.5rem)] leading-none text-moss">
+            <p className="text-accent-italic text-[clamp(3.25rem,7vw,5.5rem)] leading-none text-lime">
               <CountUp to={stat.to} duration={2} />
               {stat.suffix ? <span className="ml-2 text-[0.45em]">{stat.suffix}</span> : null}
             </p>
-            <p className="mx-auto mt-4 max-w-[16ch] text-xs font-semibold tracking-[0.22em] text-ink/60 uppercase">
+            <p className="mx-auto mt-4 max-w-[16ch] text-xs font-semibold tracking-[0.22em] text-white/55 uppercase">
               {stat.label}
             </p>
           </div>

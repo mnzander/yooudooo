@@ -1,35 +1,42 @@
-import { Phone, ShieldCheck, Wrench, MapPin } from 'lucide-react'
+import { Phone, ShieldCheck, Wrench, MapPin, ArrowUpRight } from 'lucide-react'
 import AnimatedContent from '@/components/AnimatedContent'
 import ShinyText from '@/components/ShinyText'
 import SectionHeading from '@/components/SectionHeading'
 import { dealer } from '@/data/models'
 
-const services = [
-  {
-    icon: ShieldCheck,
-    title: `${dealer.warrantyYears} años de garantía`,
-    body: 'Garantía oficial de la marca en todos los vehículos, con cobertura completa desde la entrega.',
-  },
-  {
-    icon: Wrench,
-    title: 'Servicio postventa',
-    body: 'Mantenimiento, revisiones y recambios originales en nuestras propias instalaciones.',
-  },
-]
-
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   `${dealer.street}, ${dealer.zip} ${dealer.city}`
 )}`
 
+const perks = [
+  {
+    icon: ShieldCheck,
+    title: `${dealer.warrantyYears} años de garantía`,
+    body: 'Garantía oficial de la marca en todos los vehículos, desde el día de la entrega.',
+  },
+  {
+    icon: Wrench,
+    title: 'Servicio postventa',
+    body: 'Mantenimiento, revisiones y recambios originales en nuestras instalaciones.',
+  },
+]
+
 export default function Contact() {
   return (
-    <section id="contacto" className="relative mx-auto max-w-7xl px-6 py-28 sm:py-36">
-      <SectionHeading index="03" label="Contacto" title="Hablemos" />
+    <section id="contacto" className="relative mx-auto max-w-7xl px-6 pb-28 sm:pb-36">
+      <SectionHeading index="03" label="Contacto" title="Hablemos" tone="light" />
 
-      <div className="mt-16 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-        <AnimatedContent distance={70} duration={0.9}>
-          <div className="relative h-full overflow-hidden rounded-3xl border border-lime/25 bg-gradient-to-br from-lime/12 via-ink-card to-ink-card p-9 sm:p-12">
-            <div className="absolute -top-24 -right-24 size-64 rounded-full bg-lime/10 blur-3xl" />
+      <p className="mt-8 max-w-2xl text-base leading-relaxed text-ink/70">
+        Resolvemos tus dudas sobre cualquiera de las tres versiones del Yooudooo 6, concertamos una
+        prueba sin compromiso o te preparamos una oferta a medida.
+      </p>
+
+      <div className="mt-16 grid gap-5 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+        {/* Tarjeta oscura: ancla la identidad de marca dentro del bloque claro
+            y es el único sitio donde el lima tiene contraste suficiente */}
+        <AnimatedContent distance={70} duration={0.9} className="lg:h-full">
+          <div className="relative flex h-full flex-col overflow-hidden rounded-3xl bg-ink p-9 sm:p-12">
+            <div className="absolute -top-32 -right-32 size-80 rounded-full bg-lime/10 blur-3xl" />
 
             <p className="relative text-xs font-semibold tracking-[0.3em] text-lime uppercase">
               Llámanos
@@ -38,7 +45,7 @@ export default function Contact() {
             <a
               href={`tel:${dealer.phoneLink}`}
               aria-label={`Llamar al ${dealer.phone}`}
-              className="text-accent-italic relative mt-5 block py-1 text-[clamp(2.6rem,7vw,5rem)] leading-none"
+              className="text-accent-italic relative mt-5 block py-1 text-[clamp(2.6rem,6.5vw,4.5rem)] leading-none"
             >
               <ShinyText
                 text={dealer.phone}
@@ -50,15 +57,15 @@ export default function Contact() {
               />
             </a>
 
-            <p className="relative mt-6 max-w-md text-base leading-relaxed text-white/60">
-              Resolvemos tus dudas sobre cualquiera de las tres versiones del Yooudooo 6, concertamos
-              una prueba o te preparamos una oferta a medida.
+            <p className="relative mt-6 max-w-sm text-base leading-relaxed text-white/60">
+              Te atendemos personalmente y sin prisas. Si lo prefieres, pásate por el concesionario
+              y lo vemos con calma.
             </p>
 
-            <div className="relative mt-9 flex flex-wrap gap-3">
+            <div className="relative mt-auto flex flex-wrap gap-3 pt-10">
               <a
                 href={`tel:${dealer.phoneLink}`}
-                className="flex items-center gap-2.5 rounded-full bg-lime px-7 py-3.5 text-sm font-bold tracking-wide text-ink uppercase transition-all duration-300 hover:bg-lime-bright hover:shadow-[0_0_40px_-6px_var(--color-lime)]"
+                className="flex min-h-11 items-center gap-2.5 rounded-full bg-lime px-7 text-sm font-bold tracking-wide text-ink uppercase transition-all duration-300 hover:bg-lime-bright hover:shadow-[0_0_40px_-6px_var(--color-lime)]"
               >
                 <Phone className="size-4" strokeWidth={2.4} />
                 Llamar ahora
@@ -67,50 +74,55 @@ export default function Contact() {
                 href={mapsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2.5 rounded-full border border-white/20 px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-all duration-300 hover:border-lime hover:text-lime"
+                className="flex min-h-11 items-center gap-2.5 rounded-full border border-white/25 px-7 text-sm font-bold tracking-wide text-white uppercase transition-all duration-300 hover:border-lime hover:text-lime"
               >
                 <MapPin className="size-4" />
                 Cómo llegar
               </a>
             </div>
-
-            <div className="relative mt-10 border-t border-ink-line pt-7">
-              <p className="text-xs tracking-[0.2em] text-white/55 uppercase">Dónde estamos</p>
-              <p className="mt-3 text-lg font-medium text-white">{dealer.street}</p>
-              <p className="text-white/55">
-                {dealer.zip} {dealer.city} · {dealer.region}
-              </p>
-            </div>
           </div>
         </AnimatedContent>
 
         <div className="grid gap-5">
-          {services.map((service, i) => (
-            <AnimatedContent key={service.title} distance={70} duration={0.85} delay={0.12 + i * 0.12}>
-              <article className="group h-full rounded-3xl border border-ink-line bg-ink-card/70 p-9 transition-colors duration-500 hover:border-lime/40">
-                <service.icon
-                  className="size-7 text-lime transition-transform duration-500 group-hover:scale-110"
-                  strokeWidth={1.7}
-                />
-                <h3 className="mt-6 text-2xl text-white">{service.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/50">{service.body}</p>
+          <AnimatedContent distance={70} duration={0.85} delay={0.12}>
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="group flex items-start justify-between gap-6 rounded-3xl border border-bone-line bg-white p-9 transition-colors duration-500 hover:border-ink/25"
+            >
+              <div>
+                <MapPin className="size-6 text-moss" strokeWidth={1.8} />
+                <p className="mt-6 text-xs font-semibold tracking-[0.22em] text-ink/60 uppercase">
+                  Dónde estamos
+                </p>
+                <p className="mt-3 text-xl font-semibold text-ink">{dealer.street}</p>
+                <p className="mt-1 text-ink/70">
+                  {dealer.zip} {dealer.city} · {dealer.region}
+                </p>
+              </div>
+              <ArrowUpRight className="size-5 shrink-0 text-ink/35 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-moss" />
+            </a>
+          </AnimatedContent>
+
+          {perks.map((perk, i) => (
+            <AnimatedContent
+              key={perk.title}
+              distance={70}
+              duration={0.85}
+              delay={0.24 + i * 0.12}
+            >
+              <article className="flex h-full items-start gap-5 rounded-3xl border border-bone-line bg-white p-9 transition-colors duration-500 hover:border-ink/25">
+                <perk.icon className="mt-0.5 size-6 shrink-0 text-moss" strokeWidth={1.8} />
+                <div>
+                  <h3 className="text-xl text-ink">{perk.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink/70">{perk.body}</p>
+                </div>
               </article>
             </AnimatedContent>
           ))}
         </div>
       </div>
-
-      <footer className="mt-24 flex flex-col items-center justify-between gap-5 border-t border-ink-line pt-10 sm:flex-row">
-        <div className="flex items-baseline gap-2.5">
-          <span className="text-accent-italic text-2xl text-lime">212</span>
-          <span className="font-display text-sm font-bold tracking-[0.2em] text-white/80 uppercase">
-            Bizkaia
-          </span>
-        </div>
-        <p className="text-center text-xs text-white/55 sm:text-right">
-          © {new Date().getFullYear()} {dealer.company} · {dealer.claim}
-        </p>
-      </footer>
     </section>
   )
 }

@@ -7,6 +7,7 @@ import Stats from '@/sections/Stats'
 import About from '@/sections/About'
 import Products from '@/sections/Products'
 import Contact from '@/sections/Contact'
+import Footer from '@/sections/Footer'
 
 export default function App() {
   // El hero (ScrollExpand) fija la altura de su track tras montar, lo que desplaza
@@ -34,16 +35,17 @@ export default function App() {
 
       <main>
         <Hero />
+        <Stats />
+        <About />
 
-        {/* Bloque claro central: da respiro entre el hero y el cierre en negro */}
+        {/* Bloque claro: productos y contacto sobre blanco hueso */}
         <div className="relative bg-bone text-ink">
-          <Stats />
-          <About />
+          <Products />
+          <Contact />
         </div>
-
-        <Products />
-        <Contact />
       </main>
+
+      <Footer />
 
       <NegativeCursor />
     </>

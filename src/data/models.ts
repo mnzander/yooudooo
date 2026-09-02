@@ -55,7 +55,6 @@ export const models: CarModel[] = [
     powerKw: 160,
     torque: '410 N·m',
     consumption: '11 L/100 km',
-    price: 'Desde 39.300 €',
     image: '/media/modelos/y6-gasolina.jpg',
     highlights: ['2.0T turbo inyección directa', 'Cambio 8AT', 'Bloqueo diferencial trasero'],
     specs: [
