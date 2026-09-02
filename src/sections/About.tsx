@@ -9,20 +9,20 @@ export default function About() {
     <section id="quienes-somos" className="relative mx-auto max-w-7xl px-6 py-28 sm:py-36">
       <SectionHeading index="01" label="Quiénes somos" title="Oyarzabal Automotive" />
 
-      <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-        <div>
+      <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:items-stretch lg:gap-16">
+        <div className="flex flex-col lg:justify-between">
           <ScrollReveal
             baseOpacity={0.08}
             baseRotation={2}
             blurStrength={5}
             containerClassName="!my-0"
-            textClassName="!text-[clamp(1.3rem,2.4vw,1.9rem)] !font-medium !leading-[1.4] font-sans text-white"
+            textClassName="!text-[clamp(2.1rem,4vw,3.5rem)] !font-black !leading-[1.05] !tracking-tight !normal-case font-display text-white"
           >
             {'El único concesionario oficial de Yooudooo en Bizkaia'}
           </ScrollReveal>
 
           <AnimatedContent distance={60} duration={0.9} delay={0.1}>
-            <p className="mt-8 text-base leading-relaxed text-white/55">
+            <p className="mt-10 text-base leading-relaxed text-white/55 lg:mt-0">
               Hazte con un todoterreno que redefine la libertad de la mano de {dealer.company}, un
               equipo que acompaña al cliente antes, durante y después de la compra. Asesoramiento
               sin prisas, entrega con garantía oficial de {dealer.warrantyYears} años y un servicio
@@ -39,12 +39,12 @@ export default function About() {
           </AnimatedContent>
         </div>
 
-        <AnimatedContent distance={80} duration={1} scale={0.96}>
-          <figure className="relative overflow-hidden rounded-3xl border border-ink-line">
+        <AnimatedContent distance={80} duration={1} scale={0.96} className="lg:h-full">
+          <figure className="relative h-full min-h-[22rem] overflow-hidden rounded-3xl border border-ink-line">
             <img
               src="/media/modelos/y6-gasolina.jpg"
               alt="Yooudooo 6 en versión gasolina sobre terreno de arena"
-              className="aspect-[4/3] w-full object-cover"
+              className="size-full object-cover"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
