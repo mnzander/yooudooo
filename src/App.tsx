@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Particles from '@/components/Particles'
+
+// El fondo es decorativo y arrastra el shader de OGL: fuera del bundle inicial.
+const Topography = lazy(() => import('@/components/Topography'))
 import Nav from '@/components/Nav'
 import NegativeCursor from '@/components/NegativeCursor'
 import Hero from '@/sections/Hero'
@@ -24,19 +26,29 @@ export default function App() {
 
   return (
     <>
+      {/* Curvas de nivel: el lenguaje visual del terreno, acorde a un todoterreno */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        <Particles
-          particleCount={190}
-          particleSpread={11}
-          speed={0.06}
-          particleColors={['#b9e901', '#d0ff2b', '#5c7400']}
-          particleBaseSize={62}
-          sizeRandomness={0.9}
-          alphaParticles
-          moveParticlesOnHover
-          particleHoverFactor={0.4}
-          disableRotation={false}
-        />
+        <Suspense fallback={null}>
+          <Topography
+            colorMode="elevation"
+            lowColor="#1d2600"
+            midColor="#6f8c00"
+            highColor="#b9e901"
+            speed={0.14}
+            morphAmount={2.2}
+            morphSpeed={0.03}
+            bands={2.4}
+            thickness={0.006}
+            scale={1.15}
+            glow={0.35}
+            contrast={2.4}
+            brightness={0.85}
+            opacity={0.28}
+            grain
+            grainIntensity={0.035}
+            mouseInteraction={false}
+          />
+        </Suspense>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(185,233,1,0.05),transparent_60%)]" />
       </div>
 

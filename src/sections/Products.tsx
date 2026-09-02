@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import AnimatedContent from '@/components/AnimatedContent'
+import BlurText from '@/components/BlurText'
 import SpotlightCard from '@/components/SpotlightCard'
 import SectionHeading from '@/components/SectionHeading'
 import ModelModal from '@/components/ModelModal'
@@ -13,10 +14,13 @@ export default function Products() {
     <section id="productos" className="relative mx-auto max-w-7xl px-6 py-28 sm:py-36">
       <SectionHeading index="02" label="Productos" title="Yooudooo 6" />
 
-      <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/55">
-        Tres versiones del mismo todoterreno: dos de gasolina y una diésel. Elige la que mejor
-        encaje con tu día a día y consulta la ficha técnica completa.
-      </p>
+      <BlurText
+        text="Tres versiones del mismo todoterreno: dos de gasolina y una diésel. Elige la que mejor encaje con tu día a día y consulta la ficha técnica completa."
+        animateBy="words"
+        direction="bottom"
+        delay={35}
+        className="mt-8 max-w-2xl text-base leading-relaxed text-white/55"
+      />
 
       <div className="mt-16 grid gap-5 md:grid-cols-3">
         {models.map((model, i) => (

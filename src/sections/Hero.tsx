@@ -1,5 +1,7 @@
 import { ArrowDown, MapPin } from 'lucide-react'
 import ScrollExpand from '@/components/ScrollExpand'
+import BlurText from '@/components/BlurText'
+import RotatingText from '@/components/RotatingText'
 import { dealer } from '@/data/models'
 
 export default function Hero() {
@@ -34,18 +36,31 @@ export default function Hero() {
         }
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7">
-          <span className="rounded-full border border-lime/40 bg-lime/10 px-4 py-1.5 text-[0.7rem] font-semibold tracking-[0.25em] text-lime uppercase backdrop-blur-sm">
-            Yooudooo 212 · {dealer.region}
+          <span className="flex items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 py-1.5 text-[0.7rem] font-semibold tracking-[0.25em] text-lime uppercase backdrop-blur-sm">
+            Yooudooo 6
+            <span className="text-lime/40">·</span>
+            <RotatingText
+              texts={['Gasolina', 'Diésel', 'Navigator']}
+              rotationInterval={2600}
+              staggerDuration={0.02}
+              splitBy="characters"
+              mainClassName="justify-center overflow-hidden"
+              splitLevelClassName="overflow-hidden"
+              transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+            />
           </span>
 
           <h1 className="font-display text-[clamp(2rem,4.6vw,4rem)] font-black text-balance text-white [text-shadow:0_4px_40px_rgba(0,0,0,0.6)]">
             El único concesionario en <span className="text-lime">Bizkaia</span>
           </h1>
 
-          <p className="max-w-xl text-balance text-base text-white/70 sm:text-lg">
-            Venta oficial del Yooudooo 6 con {dealer.warrantyYears} años de garantía y servicio
-            postventa propio en Bilbao.
-          </p>
+          <BlurText
+            text={`Venta oficial del Yooudooo 6 con ${dealer.warrantyYears} años de garantía y servicio postventa propio en Bilbao.`}
+            animateBy="words"
+            direction="bottom"
+            delay={45}
+            className="max-w-xl justify-center text-base text-white/70 sm:text-lg"
+          />
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <a

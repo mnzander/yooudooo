@@ -1,5 +1,6 @@
 import { Phone, ShieldCheck, Wrench, MapPin } from 'lucide-react'
 import AnimatedContent from '@/components/AnimatedContent'
+import ShinyText from '@/components/ShinyText'
 import SectionHeading from '@/components/SectionHeading'
 import { dealer } from '@/data/models'
 
@@ -36,9 +37,17 @@ export default function Contact() {
 
             <a
               href={`tel:${dealer.phoneLink}`}
-              className="text-accent-italic relative mt-5 block text-[clamp(2.6rem,7vw,5rem)] leading-none text-lime transition-colors duration-300 hover:text-lime-bright"
+              aria-label={`Llamar al ${dealer.phone}`}
+              className="text-accent-italic relative mt-5 block text-[clamp(2.6rem,7vw,5rem)] leading-none"
             >
-              {dealer.phone}
+              <ShinyText
+                text={dealer.phone}
+                color="#b9e901"
+                shineColor="#ffffff"
+                speed={3.2}
+                delay={1.4}
+                spread={100}
+              />
             </a>
 
             <p className="relative mt-6 max-w-md text-base leading-relaxed text-white/60">
