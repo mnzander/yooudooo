@@ -119,6 +119,9 @@ const SplitText: React.FC<SplitTextProps> = ({
               },
               onComplete: () => {
                 animationCompletedRef.current = true;
+                // Un will-change por carácter deja decenas de capas de GPU vivas
+                // el resto de la sesión: se sueltan al acabar.
+                gsap.set(targets, { willChange: 'auto', clearProps: 'willChange' });
                 onCompleteRef.current?.();
               },
               willChange: 'transform, opacity',

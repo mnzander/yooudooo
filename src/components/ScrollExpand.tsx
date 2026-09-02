@@ -223,10 +223,33 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     };
   }, [applyProgress, useWindowScroll]);
 
+  // Decodificar vídeo fuera de pantalla es gasto puro de CPU: se pausa al salir
+  // del viewport, que es justo cuando el resto de la página está animando.
+  useEffect(() => {
+    if (mediaType !== 'video') return;
+    const el = mediaRef.current;
+    const stage = stageRef.current;
+    if (!el || !stage || typeof IntersectionObserver === 'undefined') return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play?.().catch(() => {});
+        } else {
+          el.pause?.();
+        }
+      },
+      { threshold: 0.01 }
+    );
+    io.observe(stage);
+    return () => io.disconnect();
+  }, [mediaType, src]);
+
   const media =
     mediaType === 'video' ? (
       <video
         ref={mediaRef}
+        key={src}
         className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
         src={src}
         poster={poster}
@@ -234,6 +257,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
         muted
         loop
         playsInline
+        preload="auto"
       />
     ) : (
       <img

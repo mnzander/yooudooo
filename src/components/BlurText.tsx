@@ -45,6 +45,7 @@ const BlurText: React.FC<BlurTextProps> = ({
 }) => {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
+  const [settled, setSettled] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
@@ -105,10 +106,19 @@ const BlurText: React.FC<BlurTextProps> = ({
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}
             transition={spanTransition}
-            onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
+            onAnimationComplete={
+              index === elements.length - 1
+                ? () => {
+                    setSettled(true);
+                    onAnimationComplete?.();
+                  }
+                : undefined
+            }
             style={{
               display: 'inline-block',
-              willChange: 'transform, filter, opacity'
+              // Cada palabra con will-change es una capa de GPU viva mientras exista:
+              // sólo se reserva mientras esa animación está corriendo de verdad.
+              willChange: inView && !settled ? 'transform, filter, opacity' : 'auto'
             }}
           >
             {segment === ' ' ? '\u00A0' : segment}

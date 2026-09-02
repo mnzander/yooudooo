@@ -28,5 +28,6 @@ dist-ssr
 /media/
 /media.zip
 
-# Vídeos servidos: pendientes de compresión antes de versionarlos
-public/media/*.mp4
+# Los vídeos servidos sí se versionan: ya van comprimidos (3,3 MB y 1,2 MB) y
+# sin ellos el hero se queda en negro al clonar. Se regeneran con
+# `npm run encode:hero` a partir del original en /media.

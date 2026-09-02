@@ -3,6 +3,7 @@ import { ArrowDown, MapPin } from 'lucide-react'
 import ScrollExpand from '@/components/ScrollExpand'
 import BlurText from '@/components/BlurText'
 import RotatingText from '@/components/RotatingText'
+import { useDeviceProfile } from '@/hooks/useDeviceProfile'
 import { dealer } from '@/data/models'
 
 const PAGE_GUTTER = 24 // px-6, el margen lateral del resto de secciones
@@ -25,6 +26,7 @@ export default function Hero() {
   const [frame, setFrame] = useState(() =>
     getStartFrame(typeof window === 'undefined' ? 1440 : window.innerWidth)
   )
+  const device = useDeviceProfile()
 
   useEffect(() => {
     const onResize = () => setFrame(getStartFrame(window.innerWidth))
@@ -33,12 +35,20 @@ export default function Hero() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
+  // En equipos flojos el frame congelado evita la decodificación por frame, que
+  // es lo que hacía parpadear el vídeo; el resto recibe la copia que le encaja.
+  const source = device.lite
+    ? { type: 'image' as const, src: '/media/hero-poster.jpg' }
+    : { type: 'video' as const, src: device.small ? '/media/hero-sm.mp4' : '/media/hero.mp4' }
+
   return (
     <section id="inicio" className="relative">
       <ScrollExpand
         useWindowScroll
-        mediaType="video"
-        src="/media/hero.mp4"
+        mediaType={source.type}
+        src={source.src}
+        poster="/media/hero-poster.jpg"
+        alt="Yooudooo 6 circulando por el monte"
         startWidth={frame.width}
         startHeight={frame.height}
         startRadius={frame.radius}
