@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
-const BASE_SIZE = 26
-const HOVER_SCALE = 2.4
+/* El círculo se dibuja ya al tamaño de hover y el reposo se consigue
+   encogiéndolo. Al revés (26 px escalados a 2,4) el navegador amplía el mapa de
+   bits ya rasterizado y el borde sale dentado. */
+const RENDER_SIZE = 64
+const IDLE_SCALE = 26 / RENDER_SIZE
+const HOVER_SCALE = 1
 
 /**
  * Puntero circular blanco que invierte todo lo que queda debajo (mix-blend-mode:
@@ -29,8 +33,8 @@ export default function NegativeCursor() {
     let targetY = window.innerHeight / 2
     let x = targetX
     let y = targetY
-    let scale = 1
-    let targetScale = 1
+    let scale = IDLE_SCALE
+    let targetScale = IDLE_SCALE
     let visible = false
     let raf = 0
 
@@ -39,7 +43,7 @@ export default function NegativeCursor() {
     const onMove = (e: PointerEvent) => {
       targetX = e.clientX
       targetY = e.clientY
-      targetScale = (e.target as Element)?.closest?.(interactive) ? HOVER_SCALE : 1
+      targetScale = (e.target as Element)?.closest?.(interactive) ? HOVER_SCALE : IDLE_SCALE
       if (!visible) {
         visible = true
         x = targetX
@@ -83,7 +87,7 @@ export default function NegativeCursor() {
       ref={dotRef}
       aria-hidden
       className="pointer-events-none fixed top-0 left-0 z-[999] rounded-full bg-white opacity-0 mix-blend-difference"
-      style={{ width: BASE_SIZE, height: BASE_SIZE, willChange: 'transform' }}
+      style={{ width: RENDER_SIZE, height: RENDER_SIZE, willChange: 'transform' }}
     />
   )
 }

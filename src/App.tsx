@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from '@/components/Nav'
 import NegativeCursor from '@/components/NegativeCursor'
+import GarageReveal from '@/components/GarageReveal'
 import Hero from '@/sections/Hero'
 import Stats from '@/sections/Stats'
 import About from '@/sections/About'
@@ -35,8 +36,11 @@ export default function App() {
 
       <main>
         <Hero />
-        <Stats />
-        <About />
+
+        <GarageReveal>
+          <Stats />
+          <About />
+        </GarageReveal>
 
         {/* El bloque claro monta sobre la sección anterior con esquinas redondeadas:
             un degradado negro→blanco cruza los grises medios y se lee como una
