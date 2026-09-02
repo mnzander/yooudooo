@@ -18,13 +18,15 @@ export default function About() {
             containerClassName="!my-0"
             textClassName="!text-[clamp(1.3rem,2.4vw,1.9rem)] !font-medium !leading-[1.4] font-sans text-white"
           >
-            {`Hazte con un todoterreno que redefine la libertad de la mano de ${dealer.company}, un equipo que acompaña al cliente antes, durante y después de la compra.`}
+            {'El único concesionario oficial de Yooudooo en Bizkaia'}
           </ScrollReveal>
 
           <AnimatedContent distance={60} duration={0.9} delay={0.1}>
             <p className="mt-8 text-base leading-relaxed text-white/55">
-              Asesoramiento sin prisas, entrega con garantía oficial de {dealer.warrantyYears} años
-              y un servicio postventa propio en {dealer.street}, {dealer.city}.
+              Hazte con un todoterreno que redefine la libertad de la mano de {dealer.company}, un
+              equipo que acompaña al cliente antes, durante y después de la compra. Asesoramiento
+              sin prisas, entrega con garantía oficial de {dealer.warrantyYears} años y un servicio
+              postventa propio en {dealer.city}.
             </p>
 
             <a
