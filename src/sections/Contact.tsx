@@ -38,7 +38,7 @@ export default function Contact() {
             <a
               href={`tel:${dealer.phoneLink}`}
               aria-label={`Llamar al ${dealer.phone}`}
-              className="text-accent-italic relative mt-5 block text-[clamp(2.6rem,7vw,5rem)] leading-none"
+              className="text-accent-italic relative mt-5 block py-1 text-[clamp(2.6rem,7vw,5rem)] leading-none"
             >
               <ShinyText
                 text={dealer.phone}
@@ -75,7 +75,7 @@ export default function Contact() {
             </div>
 
             <div className="relative mt-10 border-t border-ink-line pt-7">
-              <p className="text-xs tracking-[0.2em] text-white/35 uppercase">Dónde estamos</p>
+              <p className="text-xs tracking-[0.2em] text-white/55 uppercase">Dónde estamos</p>
               <p className="mt-3 text-lg font-medium text-white">{dealer.street}</p>
               <p className="text-white/55">
                 {dealer.zip} {dealer.city} · {dealer.region}
@@ -107,7 +107,7 @@ export default function Contact() {
             Bizkaia
           </span>
         </div>
-        <p className="text-center text-xs text-white/35 sm:text-right">
+        <p className="text-center text-xs text-white/55 sm:text-right">
           © {new Date().getFullYear()} {dealer.company} · {dealer.claim}
         </p>
       </footer>

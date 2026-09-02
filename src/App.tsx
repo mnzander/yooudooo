@@ -34,8 +34,13 @@ export default function App() {
 
       <main>
         <Hero />
-        <Stats />
-        <About />
+
+        {/* Bloque claro central: da respiro entre el hero y el cierre en negro */}
+        <div className="relative bg-bone text-ink">
+          <Stats />
+          <About />
+        </div>
+
         <Products />
         <Contact />
       </main>

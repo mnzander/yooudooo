@@ -78,7 +78,7 @@ export default function ModelModal({ model, onClose }: ModelModalProps) {
             {quickFacts.map(fact => (
               <div key={fact.label} className="rounded-xl bg-ink-card/70 p-4">
                 <fact.icon className="size-4 text-lime" strokeWidth={1.8} />
-                <p className="mt-3 text-xs tracking-[0.15em] text-white/40 uppercase">
+                <p className="mt-3 text-xs tracking-[0.15em] text-white/55 uppercase">
                   {fact.label}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-white">{fact.value}</p>
@@ -95,7 +95,7 @@ export default function ModelModal({ model, onClose }: ModelModalProps) {
                     key={item.label}
                     className="flex items-baseline justify-between gap-4 border-b border-ink-line/60 pb-2.5"
                   >
-                    <dt className="text-sm text-white/45">{item.label}</dt>
+                    <dt className="text-sm text-white/55">{item.label}</dt>
                     <dd className="text-right text-sm font-medium text-white">{item.value}</dd>
                   </div>
                 ))}

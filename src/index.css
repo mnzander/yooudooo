@@ -12,6 +12,12 @@
   --color-ink-card: #121310;
   --color-ink-line: #23251d;
 
+  /* Secciones claras. El lima da 1,43:1 sobre blanco, así que ahí sólo vale
+     como fondo con texto oscuro encima; para texto se usa --color-moss. */
+  --color-bone: #f4f4f0;
+  --color-bone-line: #dcdcd3;
+  --color-moss: #4a5d00;
+
   --font-display: 'Archivo', 'Segoe UI', sans-serif;
   --font-sans: 'Inter', 'Segoe UI', sans-serif;
   --font-accent: 'Anton', 'Archivo', sans-serif;

@@ -79,7 +79,7 @@ export default function Products() {
 
                   <div className="mt-auto flex items-end justify-between gap-4 border-t border-ink-line pt-6">
                     <div>
-                      <p className="text-xs tracking-[0.15em] text-white/35 uppercase">
+                      <p className="text-xs tracking-[0.15em] text-white/55 uppercase">
                         Potencia
                       </p>
                       <p className="text-accent-italic mt-1 text-3xl text-lime">
@@ -90,7 +90,7 @@ export default function Products() {
                     {model.price ? (
                       <p className="text-right text-sm font-medium text-white/70">{model.price}</p>
                     ) : (
-                      <p className="text-right text-sm text-white/40">Consultar precio</p>
+                      <p className="text-right text-sm text-white/55">Consultar precio</p>
                     )}
                   </div>
 

@@ -38,7 +38,7 @@ export default function Hero() {
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7">
           <span className="flex items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-lime uppercase backdrop-blur-sm">
             Yooudooo 6
-            <span className="text-lime/40">·</span>
+            <span aria-hidden className="text-lime/70">·</span>
             <RotatingText
               texts={['Gasolina', 'Diésel', 'Navigator']}
               rotationInterval={2600}
