@@ -32,6 +32,9 @@ function getHeroConfig(vw: number) {
       // Menos suavizado: en táctil el retardo se percibe como que el marco va
       // por detrás del dedo, no como fluidez.
       smoothing: 0.05,
+      // Sin zoom del vídeo: es una capa más que recomponer en cada frame del
+      // gesto, encima del recorte, que ya es lo más caro de la animación.
+      mediaZoom: 1,
     }
   }
   if (vw < 1024) {
@@ -42,6 +45,7 @@ function getHeroConfig(vw: number) {
       scrollDistance: 0.55,
       holdDistance: 0.35,
       smoothing: 0.08,
+      mediaZoom: 1.25,
     }
   }
   return {
@@ -51,6 +55,7 @@ function getHeroConfig(vw: number) {
     scrollDistance: 1.15,
     holdDistance: 0.85,
     smoothing: 0.1,
+    mediaZoom: 1.45,
   }
 }
 
@@ -84,7 +89,7 @@ export default function Hero() {
         startWidth={frame.width}
         startHeight={frame.height}
         startRadius={frame.radius}
-        mediaZoom={1.45}
+        mediaZoom={frame.mediaZoom}
         scrollDistance={frame.scrollDistance}
         holdDistance={frame.holdDistance}
         smoothing={frame.smoothing}

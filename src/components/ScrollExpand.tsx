@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 const clamp = (v: number, a: number, b: number): number => (v < a ? a : v > b ? b : v);
@@ -78,6 +78,10 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   const scrimRef = useRef<HTMLDivElement | null>(null);
   const hintRef = useRef<HTMLDivElement | null>(null);
 
+  const [videoReady, setVideoReady] = useState(false);
+  // Último estilo escrito, para no repetir asignaciones que no cambian nada.
+  const lastRef = useRef({ clip: '', zoom: '', scrim: '', title: -1, hint: -1, overlay: -1 });
+
   const propsRef = useRef<Required<Pick<ScrollExpandProps, ConfigKey>>>(
     {} as Required<Pick<ScrollExpandProps, ConfigKey>>
   );
@@ -102,37 +106,64 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     const c = propsRef.current;
 
     const e = smoothstep(0, 1, p);
+    const last = lastRef.current;
 
+    // clip-path no está compositado: cada escritura repinta el vídeo entero. Se
+    // redondea a dos decimales y se salta la asignación si el valor no cambia,
+    // que en móvil evita repintados sub-píxel a lo largo de todo el gesto.
     const w = c.startWidth + (100 - c.startWidth) * e;
     const h = c.startHeight + (100 - c.startHeight) * e;
-    const ix = Math.max(0, (100 - w) / 2);
-    const iy = Math.max(0, (100 - h) / 2);
-    const r = c.startRadius + (c.endRadius - c.startRadius) * e;
-    frame.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px)`;
+    const ix = Math.max(0, (100 - w) / 2).toFixed(2);
+    const iy = Math.max(0, (100 - h) / 2).toFixed(2);
+    const r = (c.startRadius + (c.endRadius - c.startRadius) * e).toFixed(1);
+    const clip = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px)`;
+    if (clip !== last.clip) {
+      frame.style.clipPath = clip;
+      last.clip = clip;
+    }
 
-    media.style.transform = `scale(${c.mediaZoom + (1 - c.mediaZoom) * e})`;
+    const zoom = `scale(${(c.mediaZoom + (1 - c.mediaZoom) * e).toFixed(4)})`;
+    if (zoom !== last.zoom) {
+      media.style.transform = zoom;
+      last.zoom = zoom;
+    }
 
-    if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
+    if (scrimRef.current) {
+      const scrim = (c.overlayScrim * e).toFixed(3);
+      if (scrim !== last.scrim) {
+        scrimRef.current.style.opacity = scrim;
+        last.scrim = scrim;
+      }
+    }
 
     // El relevo entre título y texto va adelantado: si el segundo espera al
     // final de la expansión, aparece con el marco ya quieto y da la sensación
     // de llegar tarde. Los tramos no se solapan, para que no se lean a la vez.
     if (titleRef.current) {
-      const out = smoothstep(0.18, 0.46, p);
-      titleRef.current.style.opacity = `${1 - out}`;
-      titleRef.current.style.transform = `translate3d(0, ${-28 * out}px, 0) scale(${1 + 0.06 * out})`;
+      const out = +smoothstep(0.18, 0.46, p).toFixed(3);
+      if (out !== last.title) {
+        titleRef.current.style.opacity = `${1 - out}`;
+        titleRef.current.style.transform = `translate3d(0, ${-28 * out}px, 0) scale(${1 + 0.06 * out})`;
+        last.title = out;
+      }
     }
 
     if (hintRef.current) {
-      const gone = smoothstep(0, 0.1, p);
-      hintRef.current.style.opacity = `${1 - gone}`;
-      hintRef.current.style.transform = `translate3d(0, ${8 * gone}px, 0)`;
+      const gone = +smoothstep(0, 0.1, p).toFixed(3);
+      if (gone !== last.hint) {
+        hintRef.current.style.opacity = `${1 - gone}`;
+        hintRef.current.style.transform = `translate3d(0, ${8 * gone}px, 0)`;
+        last.hint = gone;
+      }
     }
 
     if (overlayRef.current) {
-      const inn = smoothstep(0.5, 0.78, p);
-      overlayRef.current.style.opacity = `${inn}`;
-      overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
+      const inn = +smoothstep(0.5, 0.78, p).toFixed(3);
+      if (inn !== last.overlay) {
+        overlayRef.current.style.opacity = `${inn}`;
+        overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
+        last.overlay = inn;
+      }
     }
   }, []);
 
@@ -175,9 +206,10 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
         ? clamp(-track.getBoundingClientRect().top / span, 0, 1)
         : clamp(root.scrollTop / span, 0, 1);
 
-      // Margen holgado: el suavizado se acerca a 1 de forma asintótica y con un
-      // umbral pegado a 1 el bloqueo no llegaba a saltar nunca.
-      if (raw >= 0.99) {
+      // El bloqueo se mide sobre el progreso ya suavizado, que es lo que se ve:
+      // el marco llega a ocupar la pantalla bastante antes de que el valor bruto
+      // se acerque a 1, y atado al bruto se quedaba sin saltar.
+      if (smoothstep(0, 1, raw) >= 0.99) {
         latched = true;
         return 1;
       }
@@ -238,10 +270,45 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     };
   }, [applyProgress, useWindowScroll]);
 
-  // Decodificar vídeo fuera de pantalla es gasto puro de CPU: se pausa al salir
-  // del viewport, que es justo cuando el resto de la página está animando.
+  /**
+   * El vídeo no se pide hasta que la carga crítica ha terminado y el hilo está
+   * libre. Bajarse y decodificar varios MB a la vez que se pinta la página es lo
+   * que hace caer los fps durante los primeros segundos; mientras tanto se ve el
+   * póster, que ya viene en el HTML.
+   */
   useEffect(() => {
     if (mediaType !== 'video') return;
+
+    let cancelled = false;
+    let idleId = 0;
+    let supportsIdle = false;
+
+    const start = () => {
+      if (!cancelled) setVideoReady(true);
+    };
+
+    const afterLoad = () => {
+      if (cancelled) return;
+      supportsIdle = typeof window.requestIdleCallback === 'function';
+      idleId = supportsIdle
+        ? window.requestIdleCallback(start, { timeout: 2000 })
+        : window.setTimeout(start, 300);
+    };
+
+    if (document.readyState === 'complete') afterLoad();
+    else window.addEventListener('load', afterLoad, { once: true });
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', afterLoad);
+      if (!idleId) return;
+      if (supportsIdle) window.cancelIdleCallback(idleId);
+      else window.clearTimeout(idleId);
+    };
+  }, [mediaType]);
+
+  useEffect(() => {
+    if (mediaType !== 'video' || !videoReady) return;
     const el = mediaRef.current;
     const stage = stageRef.current;
     if (!el || !stage || typeof IntersectionObserver === 'undefined') return;
@@ -258,7 +325,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     );
     io.observe(stage);
     return () => io.disconnect();
-  }, [mediaType, src]);
+  }, [mediaType, src, videoReady]);
 
   const media =
     mediaType === 'video' ? (
@@ -266,7 +333,10 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
         ref={mediaRef}
         key={src}
         className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
-        src={src}
+        // El src se asigna cuando la página ya ha pintado: descargar y decodificar
+        // 9 MB compitiendo con el primer render es lo que hunde los fps al entrar.
+        // Hasta entonces se ve el póster, que ya viene con el HTML.
+        src={videoReady ? src : undefined}
         poster={poster}
         autoPlay
         muted
