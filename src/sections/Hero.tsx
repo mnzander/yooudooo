@@ -78,10 +78,20 @@ export default function Hero() {
     ? { type: 'image' as const, src: '/media/hero-poster.jpg' }
     : { type: 'video' as const, src: device.small ? '/media/hero-sm.mp4' : '/media/hero.mp4' }
 
+  /**
+   * En móvil el vídeo arranca ya a pantalla completa, sin animación de apertura.
+   * clip-path no está compositado: animarlo obliga a repintar el vídeo entero en
+   * cada frame del gesto y en Android eso no llega a ir fino por mucho que se
+   * recorte el resto. Con enabled en falso el progreso queda fijo en 1 y el
+   * recorrido se reduce a una pantalla, sin scroll muerto.
+   */
+  const staticHero = device.small
+
   return (
     <section id="inicio" className="relative">
       <ScrollExpand
         useWindowScroll
+        enabled={!staticHero}
         mediaType={source.type}
         src={source.src}
         poster="/media/hero-poster.jpg"
@@ -89,26 +99,30 @@ export default function Hero() {
         startWidth={frame.width}
         startHeight={frame.height}
         startRadius={frame.radius}
-        mediaZoom={frame.mediaZoom}
-        scrollDistance={frame.scrollDistance}
-        holdDistance={frame.holdDistance}
+        mediaZoom={staticHero ? 1 : frame.mediaZoom}
+        scrollDistance={staticHero ? 0 : frame.scrollDistance}
+        holdDistance={staticHero ? 0 : frame.holdDistance}
         smoothing={frame.smoothing}
         overlayScrim={0.6}
         title={
-          <span className="flex flex-col items-center gap-[0.55em]">
-            <span className="font-display text-[max(0.75rem,0.17em)] leading-none font-semibold tracking-[0.35em] text-white/60 uppercase">
-              {dealer.company}
+          staticHero ? null : (
+            <span className="flex flex-col items-center gap-[0.55em]">
+              <span className="font-display text-[max(0.75rem,0.17em)] leading-none font-semibold tracking-[0.35em] text-white/60 uppercase">
+                {dealer.company}
+              </span>
+              <span className="font-display leading-[0.9] font-black tracking-[-0.04em] uppercase">
+                Yooudooo <span className="text-lime">212</span>
+              </span>
             </span>
-            <span className="font-display leading-[0.9] font-black tracking-[-0.04em] uppercase">
-              Yooudooo <span className="text-lime">212</span>
-            </span>
-          </span>
+          )
         }
         scrollHint={
-          <span className="inline-flex items-center gap-2 text-xs tracking-[0.3em] uppercase">
-            <ArrowDown className="size-3.5 animate-bounce" />
-            Desplázate
-          </span>
+          staticHero ? null : (
+            <span className="inline-flex items-center gap-2 text-xs tracking-[0.3em] uppercase">
+              <ArrowDown className="size-3.5 animate-bounce" />
+              Desplázate
+            </span>
+          )
         }
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7">
@@ -153,6 +167,15 @@ export default function Hero() {
               Visítanos
             </a>
           </div>
+
+          {/* Sin animación de apertura el hint del componente queda oculto, y
+              una pantalla llena de vídeo no da pista de que haya más abajo. */}
+          {staticHero ? (
+            <span className="mt-2 inline-flex items-center gap-2 text-xs tracking-[0.3em] text-white/55 uppercase">
+              <ArrowDown className="size-3.5 animate-bounce" />
+              Desplázate
+            </span>
+          ) : null}
         </div>
       </ScrollExpand>
     </section>
