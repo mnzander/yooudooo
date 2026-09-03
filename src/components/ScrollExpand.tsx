@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 const clamp = (v: number, a: number, b: number): number => (v < a ? a : v > b ? b : v);
@@ -167,7 +167,10 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     }
   }, []);
 
-  useEffect(() => {
+  // useLayoutEffect y no useEffect: la medida y el estado inicial del recorte
+  // tienen que estar puestos antes de la primera pintada. Con useEffect se veía
+  // un instante el marco pequeño por defecto antes de saltar a su sitio.
+  useLayoutEffect(() => {
     const root = rootRef.current;
     const track = trackRef.current;
     const stage = stageRef.current;
@@ -396,8 +399,14 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
       style={style}
       {...rest}
     >
-      <div ref={trackRef} className="relative w-full">
-        <div ref={stageRef} className="sticky top-0 w-full overflow-hidden [--se-title-size:4rem]">
+      {/* Alto de partida en CSS: hasta que el efecto mide, el track valdría 0 y
+          las secciones siguientes se colarían en la primera pantalla. Se usa svh
+          para que la barra de direcciones del móvil no lo altere. */}
+      <div ref={trackRef} className="relative w-full min-h-[100svh]">
+        <div
+          ref={stageRef}
+          className="sticky top-0 h-[100svh] w-full overflow-hidden [--se-title-size:4rem]"
+        >
           <div
             ref={frameRef}
             className="absolute inset-0 bg-cover bg-center [clip-path:inset(21%_29%_21%_29%_round_24px)] [will-change:clip-path]"
