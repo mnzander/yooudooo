@@ -68,6 +68,14 @@
     overflow-x: clip;
   }
 
+  /* En táctil el desplazamiento suave pelea con el impulso del dedo y el scroll
+     se siente pesado; ahí manda el nativo. */
+  @media (hover: none), (max-width: 767px) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     background-color: var(--color-ink);
     color: #ffffff;
@@ -139,6 +147,35 @@
 @utility grain-layer {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: var(--animate-grain);
+
+  /* La capa mide cuatro veces el viewport: animarla obliga a repintar más de un
+     millón de píxeles por ciclo y en móvil se come el presupuesto del scroll. */
+  @media (max-width: 767px) {
+    animation: none;
+  }
+}
+
+/* Cristal esmerilado. backdrop-filter es de lo más caro que puede pedirse a una
+   GPU móvil, así que ahí el panel pasa a color plano: al no difuminar nada, el
+   fondo tiene que ser opaco o se vería la foto cruda a través. */
+@utility glass-light {
+  background-color: color-mix(in srgb, #ffffff 45%, transparent);
+  backdrop-filter: blur(16px) saturate(1.5);
+
+  @media (max-width: 767px) {
+    background-color: #fbfbf9;
+    backdrop-filter: none;
+  }
+}
+
+@utility glass-dark {
+  background-color: color-mix(in srgb, var(--color-ink) 80%, transparent);
+  backdrop-filter: blur(16px) saturate(1.5);
+
+  @media (max-width: 767px) {
+    background-color: var(--color-ink);
+    backdrop-filter: none;
+  }
 }
 
 @utility text-accent-italic {

@@ -63,23 +63,28 @@ const BlurText: React.FC<BlurTextProps> = ({
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
-  const defaultFrom = useMemo(
-    () =>
-      direction === 'top' ? { filter: 'blur(10px)', opacity: 0, y: -50 } : { filter: 'blur(10px)', opacity: 0, y: 50 },
-    [direction]
-  );
+  // Desenfocar cada palabra por separado es caro de más para una GPU móvil:
+  // ahí la entrada se queda en desplazamiento y opacidad, que son compositados.
+  const compact =
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
 
-  const defaultTo = useMemo(
-    () => [
-      {
-        filter: 'blur(5px)',
-        opacity: 0.5,
-        y: direction === 'top' ? 5 : -5
-      },
-      { filter: 'blur(0px)', opacity: 1, y: 0 }
-    ],
-    [direction]
-  );
+  const defaultFrom = useMemo<Record<string, string | number>>(() => {
+    const y = direction === 'top' ? -50 : 50;
+    const from: Record<string, string | number> = { opacity: 0, y };
+    if (!compact) from.filter = 'blur(10px)';
+    return from;
+  }, [direction, compact]);
+
+  const defaultTo = useMemo<Array<Record<string, string | number>>>(() => {
+    const midY = direction === 'top' ? 5 : -5;
+    const mid: Record<string, string | number> = { opacity: 0.5, y: midY };
+    const end: Record<string, string | number> = { opacity: 1, y: 0 };
+    if (!compact) {
+      mid.filter = 'blur(5px)';
+      end.filter = 'blur(0px)';
+    }
+    return [mid, end];
+  }, [direction, compact]);
 
   const fromSnapshot = animationFrom ?? defaultFrom;
   const toSnapshots = animationTo ?? defaultTo;
@@ -118,7 +123,8 @@ const BlurText: React.FC<BlurTextProps> = ({
               display: 'inline-block',
               // Cada palabra con will-change es una capa de GPU viva mientras exista:
               // sólo se reserva mientras esa animación está corriendo de verdad.
-              willChange: inView && !settled ? 'transform, filter, opacity' : 'auto'
+              willChange:
+                inView && !settled ? (compact ? 'transform, opacity' : 'transform, filter, opacity') : 'auto'
             }}
           >
             {segment === ' ' ? '\u00A0' : segment}

@@ -84,7 +84,12 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
       }
     );
 
-    if (enableBlur) {
+    // Un blur por palabra recalculado en cada frame del scroll es lo que más
+    // pesa de toda la sección: en móvil se queda sólo el fundido de opacidad,
+    // que sí es compositado.
+    const compact = window.matchMedia('(max-width: 767px)').matches;
+
+    if (enableBlur && !compact) {
       gsap.fromTo(
         wordElements,
         { filter: `blur(${blurStrength}px)` },

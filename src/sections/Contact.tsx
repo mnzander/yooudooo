@@ -48,8 +48,9 @@ export default function Contact() {
         {/* Tarjeta oscura: ancla la identidad de marca dentro del bloque claro
             y es el único sitio donde el lima tiene contraste suficiente */}
         <AnimatedContent distance={70} duration={0.9} className="lg:h-full">
-          <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/15 bg-ink/80 p-9 shadow-[0_30px_70px_-30px_rgba(5,5,5,0.75)] backdrop-blur-xl backdrop-saturate-150 sm:p-12">
-            <div className="absolute -top-32 -right-32 size-80 rounded-full bg-lime/10 blur-3xl" />
+          <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/15 glass-dark p-9 shadow-[0_30px_70px_-30px_rgba(5,5,5,0.75)] sm:p-12">
+            {/* Un blur de 64 px sobre 100k px² no compensa en móvil */}
+            <div className="absolute -top-32 -right-32 hidden size-80 rounded-full bg-lime/10 blur-3xl sm:block" />
 
             <p className="relative text-xs font-semibold tracking-[0.3em] text-lime uppercase">
               Llámanos
@@ -102,7 +103,7 @@ export default function Contact() {
               href={mapsUrl}
               target="_blank"
               rel="noreferrer"
-              className="group flex items-start justify-between gap-6 rounded-3xl border border-white/80 bg-white/45 p-9 shadow-[0_20px_50px_-25px_rgba(5,5,5,0.45)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-500 hover:border-white hover:bg-white/65"
+              className="group flex items-start justify-between gap-6 rounded-3xl border border-white/80 glass-light p-9 shadow-[0_20px_50px_-25px_rgba(5,5,5,0.45)] transition-all duration-500 hover:border-white"
             >
               <div>
                 <MapPin className="size-6 text-moss" strokeWidth={1.8} />
@@ -125,7 +126,7 @@ export default function Contact() {
               duration={0.85}
               delay={0.24 + i * 0.12}
             >
-              <article className="flex h-full items-start gap-5 rounded-3xl border border-white/80 bg-white/45 p-9 shadow-[0_20px_50px_-25px_rgba(5,5,5,0.45)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-500 hover:border-white hover:bg-white/65">
+              <article className="flex h-full items-start gap-5 rounded-3xl border border-white/80 glass-light p-9 shadow-[0_20px_50px_-25px_rgba(5,5,5,0.45)] transition-all duration-500 hover:border-white">
                 <perk.icon className="mt-0.5 size-6 shrink-0 text-moss" strokeWidth={1.8} />
                 <div>
                   <h3 className="text-xl text-ink">{perk.title}</h3>

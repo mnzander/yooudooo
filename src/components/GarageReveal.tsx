@@ -28,6 +28,10 @@ export default function GarageReveal({ children }: GarageRevealProps) {
       return
     }
 
+    // En móvil se conserva sólo el fundido: escalar una foto a pantalla completa
+    // ligada al scroll obliga a recomponerla en cada frame del dedo.
+    const compact = window.matchMedia('(max-width: 767px)').matches
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         layer,
@@ -38,6 +42,11 @@ export default function GarageReveal({ children }: GarageRevealProps) {
           scrollTrigger: { trigger: root, start: 'top bottom', end: 'center center', scrub: 0.6 },
         }
       )
+
+      if (compact) {
+        gsap.set(img, { scale: 1.05 })
+        return
+      }
 
       gsap.fromTo(
         img,
