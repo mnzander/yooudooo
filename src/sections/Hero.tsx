@@ -9,27 +9,42 @@ import { dealer } from '@/data/models'
 const PAGE_GUTTER = 24 // px-6, el margen lateral del resto de secciones
 
 /**
- * El marco de partida en porcentaje del viewport. Un valor fijo se queda
- * ridículamente estrecho en móvil (38 % de 375 px son 142 px), así que en
- * pantallas pequeñas arranca al ancho de los márgenes de la página y sólo se
- * estrecha en pantallas grandes, donde hace falta recorrido para que la
- * expansión se note.
+ * Marco de partida y recorrido del hero, ambos por tamaño de pantalla.
+ *
+ * El marco: un valor fijo se queda ridículamente estrecho en móvil (38 % de
+ * 375 px son 142 px), así que ahí arranca al ancho de los márgenes de la página
+ * y sólo se estrecha en pantallas grandes.
+ *
+ * El recorrido va en múltiplos del alto de la pantalla, de modo que un valor
+ * pensado para escritorio se traduce en muchísimo scroll en un móvil alto. Y
+ * como en móvil el marco ya empieza casi a ancho completo, sale caro para un
+ * cambio que apenas se ve: allí se acorta bastante.
  */
-function getStartFrame(vw: number) {
+function getHeroConfig(vw: number) {
   const gutterPct = (PAGE_GUTTER / vw) * 100
-  if (vw < 640) return { width: 100 - gutterPct * 2, height: 52, radius: 20 }
-  if (vw < 1024) return { width: 74, height: 58, radius: 24 }
-  return { width: 46, height: 64, radius: 28 }
+  if (vw < 640) {
+    return {
+      width: 100 - gutterPct * 2,
+      height: 52,
+      radius: 20,
+      scrollDistance: 0.4,
+      holdDistance: 0.3,
+    }
+  }
+  if (vw < 1024) {
+    return { width: 74, height: 58, radius: 24, scrollDistance: 0.7, holdDistance: 0.5 }
+  }
+  return { width: 46, height: 64, radius: 28, scrollDistance: 1.15, holdDistance: 0.85 }
 }
 
 export default function Hero() {
   const [frame, setFrame] = useState(() =>
-    getStartFrame(typeof window === 'undefined' ? 1440 : window.innerWidth)
+    getHeroConfig(typeof window === 'undefined' ? 1440 : window.innerWidth)
   )
   const device = useDeviceProfile()
 
   useEffect(() => {
-    const onResize = () => setFrame(getStartFrame(window.innerWidth))
+    const onResize = () => setFrame(getHeroConfig(window.innerWidth))
     onResize()
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
@@ -53,8 +68,8 @@ export default function Hero() {
         startHeight={frame.height}
         startRadius={frame.radius}
         mediaZoom={1.45}
-        scrollDistance={1.15}
-        holdDistance={0.85}
+        scrollDistance={frame.scrollDistance}
+        holdDistance={frame.holdDistance}
         overlayScrim={0.6}
         title={
           <span className="flex flex-col items-center gap-[0.55em]">
