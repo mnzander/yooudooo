@@ -12,6 +12,14 @@ import Contact from '@/sections/Contact'
 import Footer from '@/sections/Footer'
 
 export default function App() {
+  // En móvil, mostrar u ocultar la barra de direcciones cambia el alto del
+  // viewport y dispara un resize. Por defecto GSAP recalcula ahí todos sus
+  // disparadores, y ese recálculo justo al frenar el dedo es el tirón que se
+  // percibe. Esta opción hace que ignore ese cambio concreto.
+  useEffect(() => {
+    ScrollTrigger.config({ ignoreMobileResize: true })
+  }, [])
+
   // El hero (ScrollExpand) fija la altura de su track tras montar, lo que desplaza
   // el resto de secciones. Sin este refresco los ScrollTrigger se disparan fuera de sitio.
   useEffect(() => {

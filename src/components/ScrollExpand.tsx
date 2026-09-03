@@ -181,15 +181,31 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     let stageH = 0;
     let running = false;
     let latched = false;
+    let lastW = 0;
+    let lastH = 0;
 
+    /**
+     * En móvil la barra de direcciones aparece y desaparece al frenar el scroll,
+     * y con ella cambia innerHeight. Volver a medir ahí reescribe la altura del
+     * track y el navegador reajusta la posición: es el tirón que se nota justo
+     * al soltar el dedo. Los cambios pequeños de alto se ignoran; los de ancho y
+     * los grandes (rotar la pantalla) sí re-miden.
+     */
     const measure = () => {
       const c = propsRef.current;
-      stageH = c.useWindowScroll ? window.innerHeight : root.clientHeight;
-      if (stageH <= 0) return;
+      const h = c.useWindowScroll ? window.innerHeight : root.clientHeight;
+      const w = root.clientWidth || h;
+      if (h <= 0) return;
+
+      const sameWidth = w === lastW;
+      const heightJitter = lastH > 0 && Math.abs(h - lastH) / lastH < 0.25;
+      if (sameWidth && heightJitter) return;
+
+      lastW = w;
+      lastH = h;
+      stageH = h;
       stage.style.height = `${stageH}px`;
       track.style.height = `${stageH * (1 + Math.max(0, c.scrollDistance) + Math.max(0, c.holdDistance))}px`;
-
-      const w = root.clientWidth || stageH;
       stage.style.setProperty('--se-title-size', `${clamp(w * 0.075, 20, 84)}px`);
     };
 

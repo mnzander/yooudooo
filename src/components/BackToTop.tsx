@@ -9,7 +9,10 @@ export default function BackToTop() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
+    // El umbral se fija una vez: si se recalcula con innerHeight en cada scroll,
+    // la barra de direcciones del móvil lo mueve y el botón parpadea al frenar.
+    const threshold = window.innerHeight * 0.8
+    const onScroll = () => setVisible(window.scrollY > threshold)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)

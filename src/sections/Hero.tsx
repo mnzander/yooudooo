@@ -66,8 +66,15 @@ export default function Hero() {
   const device = useDeviceProfile()
 
   useEffect(() => {
-    const onResize = () => setFrame(getHeroConfig(window.innerWidth))
-    onResize()
+    // La configuración sólo depende del ancho. Reaccionar a cualquier resize
+    // provocaba un render por cada aparición de la barra de direcciones del
+    // móvil, que es el momento en que se notaba el tirón.
+    let lastWidth = window.innerWidth
+    const onResize = () => {
+      if (window.innerWidth === lastWidth) return
+      lastWidth = window.innerWidth
+      setFrame(getHeroConfig(lastWidth))
+    }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
