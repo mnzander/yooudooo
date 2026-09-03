@@ -27,14 +27,31 @@ function getHeroConfig(vw: number) {
       width: 100 - gutterPct * 2,
       height: 52,
       radius: 20,
-      scrollDistance: 0.4,
-      holdDistance: 0.3,
+      scrollDistance: 0.26,
+      holdDistance: 0.18,
+      // Menos suavizado: en táctil el retardo se percibe como que el marco va
+      // por detrás del dedo, no como fluidez.
+      smoothing: 0.05,
     }
   }
   if (vw < 1024) {
-    return { width: 74, height: 58, radius: 24, scrollDistance: 0.7, holdDistance: 0.5 }
+    return {
+      width: 74,
+      height: 58,
+      radius: 24,
+      scrollDistance: 0.55,
+      holdDistance: 0.35,
+      smoothing: 0.08,
+    }
   }
-  return { width: 46, height: 64, radius: 28, scrollDistance: 1.15, holdDistance: 0.85 }
+  return {
+    width: 46,
+    height: 64,
+    radius: 28,
+    scrollDistance: 1.15,
+    holdDistance: 0.85,
+    smoothing: 0.1,
+  }
 }
 
 export default function Hero() {
@@ -70,6 +87,7 @@ export default function Hero() {
         mediaZoom={1.45}
         scrollDistance={frame.scrollDistance}
         holdDistance={frame.holdDistance}
+        smoothing={frame.smoothing}
         overlayScrim={0.6}
         title={
           <span className="flex flex-col items-center gap-[0.55em]">

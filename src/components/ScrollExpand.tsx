@@ -114,20 +114,23 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
 
     if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
 
+    // El relevo entre título y texto va adelantado: si el segundo espera al
+    // final de la expansión, aparece con el marco ya quieto y da la sensación
+    // de llegar tarde. Los tramos no se solapan, para que no se lean a la vez.
     if (titleRef.current) {
-      const out = smoothstep(0.4, 0.88, p);
+      const out = smoothstep(0.18, 0.46, p);
       titleRef.current.style.opacity = `${1 - out}`;
       titleRef.current.style.transform = `translate3d(0, ${-28 * out}px, 0) scale(${1 + 0.06 * out})`;
     }
 
     if (hintRef.current) {
-      const gone = smoothstep(0, 0.12, p);
+      const gone = smoothstep(0, 0.1, p);
       hintRef.current.style.opacity = `${1 - gone}`;
       hintRef.current.style.transform = `translate3d(0, ${8 * gone}px, 0)`;
     }
 
     if (overlayRef.current) {
-      const inn = smoothstep(0.68, 1, p);
+      const inn = smoothstep(0.5, 0.78, p);
       overlayRef.current.style.opacity = `${inn}`;
       overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
     }
@@ -146,6 +149,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     let target = 0;
     let stageH = 0;
     let running = false;
+    let latched = false;
 
     const measure = () => {
       const c = propsRef.current;
@@ -161,12 +165,23 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     const readProgress = () => {
       const c = propsRef.current;
       if (!c.enabled) return 1;
+      // Una vez abierto del todo se queda así: volver a encogerlo al subir
+      // obliga a rehacer la apertura para seguir leyendo, y molesta más de lo
+      // que aporta. Se reinicia al recargar.
+      if (latched) return 1;
+
       const span = stageH * Math.max(0.01, c.scrollDistance);
-      if (c.useWindowScroll) {
-        const top = track.getBoundingClientRect().top;
-        return clamp(-top / span, 0, 1);
+      const raw = c.useWindowScroll
+        ? clamp(-track.getBoundingClientRect().top / span, 0, 1)
+        : clamp(root.scrollTop / span, 0, 1);
+
+      // Margen holgado: el suavizado se acerca a 1 de forma asintótica y con un
+      // umbral pegado a 1 el bloqueo no llegaba a saltar nunca.
+      if (raw >= 0.99) {
+        latched = true;
+        return 1;
       }
-      return clamp(root.scrollTop / span, 0, 1);
+      return raw;
     };
 
     const tick = () => {
