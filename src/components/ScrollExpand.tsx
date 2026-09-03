@@ -323,6 +323,25 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     };
   }, [mediaType]);
 
+  // El vídeo entra con un fundido en cuanto tiene su primer fotograma listo, ya
+  // sobre el póster de fondo: así no hay corte entre una imagen y otra.
+  useEffect(() => {
+    if (mediaType !== 'video') return;
+    const el = mediaRef.current;
+    if (!el) return;
+
+    const reveal = () => {
+      el.style.opacity = '1';
+    };
+    if (el.readyState >= 2) reveal();
+    el.addEventListener('loadeddata', reveal);
+    el.addEventListener('playing', reveal);
+    return () => {
+      el.removeEventListener('loadeddata', reveal);
+      el.removeEventListener('playing', reveal);
+    };
+  }, [mediaType, videoReady]);
+
   useEffect(() => {
     if (mediaType !== 'video' || !videoReady) return;
     const el = mediaRef.current;
@@ -347,11 +366,11 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     mediaType === 'video' ? (
       <video
         ref={mediaRef}
-        key={src}
-        className="absolute inset-0 w-full h-full object-cover origin-center select-none [will-change:transform]"
+        // Sin key derivada del src: al pasar de vacío a la URL, React destruiría
+        // y recrearía el elemento, y ese remonte es un parpadeo en pantalla.
+        className="absolute inset-0 w-full h-full object-cover origin-center select-none opacity-0 transition-opacity duration-500 [will-change:transform]"
         // El src se asigna cuando la página ya ha pintado: descargar y decodificar
-        // 9 MB compitiendo con el primer render es lo que hunde los fps al entrar.
-        // Hasta entonces se ve el póster, que ya viene con el HTML.
+        // varios MB compitiendo con el primer render hunde los fps al entrar.
         src={videoReady ? src : undefined}
         poster={poster}
         autoPlay
@@ -381,7 +400,11 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
         <div ref={stageRef} className="sticky top-0 w-full overflow-hidden [--se-title-size:4rem]">
           <div
             ref={frameRef}
-            className="absolute inset-0 [clip-path:inset(21%_29%_21%_29%_round_24px)] [will-change:clip-path]"
+            className="absolute inset-0 bg-cover bg-center [clip-path:inset(21%_29%_21%_29%_round_24px)] [will-change:clip-path]"
+            // El póster también como fondo del marco: mientras el vídeo no tiene
+            // su primer fotograma hay un instante sin nada que pintar, y ese
+            // hueco es el fogonazo que se ve al cargar.
+            style={mediaType === 'video' && poster ? { backgroundImage: `url("${poster}")` } : undefined}
           >
             {media}
             <div
