@@ -183,7 +183,6 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     let target = 0;
     let stageH = 0;
     let running = false;
-    let latched = false;
     let lastW = 0;
     let lastH = 0;
 
@@ -215,24 +214,11 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     const readProgress = () => {
       const c = propsRef.current;
       if (!c.enabled) return 1;
-      // Una vez abierto del todo se queda así: volver a encogerlo al subir
-      // obliga a rehacer la apertura para seguir leyendo, y molesta más de lo
-      // que aporta. Se reinicia al recargar.
-      if (latched) return 1;
 
       const span = stageH * Math.max(0.01, c.scrollDistance);
-      const raw = c.useWindowScroll
+      return c.useWindowScroll
         ? clamp(-track.getBoundingClientRect().top / span, 0, 1)
         : clamp(root.scrollTop / span, 0, 1);
-
-      // El bloqueo se mide sobre el progreso ya suavizado, que es lo que se ve:
-      // el marco llega a ocupar la pantalla bastante antes de que el valor bruto
-      // se acerque a 1, y atado al bruto se quedaba sin saltar.
-      if (smoothstep(0, 1, raw) >= 0.99) {
-        latched = true;
-        return 1;
-      }
-      return raw;
     };
 
     const tick = () => {
