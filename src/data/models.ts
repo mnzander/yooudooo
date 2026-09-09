@@ -47,7 +47,7 @@ const sharedEquipment: SpecGroup = {
 export const models: CarModel[] = [
   {
     id: 'gasolina-adventure',
-    name: 'Yooudooo 6',
+    name: 'BAW 212',
     trim: 'Adventure',
     fuel: 'Gasolina',
     tagline: 'El equilibrio entre carácter y uso diario.',
@@ -81,7 +81,7 @@ export const models: CarModel[] = [
   },
   {
     id: 'diesel-adventure',
-    name: 'Yooudooo 6',
+    name: 'BAW 212',
     trim: 'Adventure',
     fuel: 'Diésel',
     tagline: 'Máxima autonomía para los que no paran.',
@@ -114,7 +114,7 @@ export const models: CarModel[] = [
   },
   {
     id: 'gasolina-navigator',
-    name: 'Yooudooo 6',
+    name: 'BAW 212',
     trim: 'Navigator',
     fuel: 'Gasolina',
     tagline: 'La versión más capaz fuera del asfalto.',
@@ -149,8 +149,54 @@ export const models: CarModel[] = [
   },
 ]
 
+export interface CarColor {
+  id: string
+  name: string
+  /** Muestra del círculo, tomada del CSS de la web oficial. */
+  swatch: string
+  /** Segundo tono, sólo en los bitono. */
+  swatchSecondary?: string
+  image: string
+}
+
+export interface ColorRange {
+  trim: string
+  colors: CarColor[]
+}
+
+/**
+ * Renders con fondo transparente, de la gama que publica el distribuidor. Está
+ * pendiente que el importador confirme qué colores se comercializan en España:
+ * si alguno no se vende aquí, se quita su entrada y ya.
+ */
+export const colorRanges: ColorRange[] = [
+  {
+    trim: 'Adventure',
+    colors: [
+      { id: 'verde', name: 'Verde', swatch: '#5c7354', image: '/media/modelos/colores/adventure-verde.webp' },
+      { id: 'negro', name: 'Negro', swatch: '#1c1c1c', image: '/media/modelos/colores/adventure-negro.webp' },
+      { id: 'gris', name: 'Gris', swatch: '#7a7a7a', image: '/media/modelos/colores/adventure-gris.webp' },
+      { id: 'blanco', name: 'Blanco', swatch: '#f2f2f2', image: '/media/modelos/colores/adventure-blanco.webp' },
+      { id: 'granate', name: 'Granate', swatch: '#6b1c24', image: '/media/modelos/colores/adventure-granate.webp' },
+      { id: 'plata-mate', name: 'Plata mate', swatch: '#c0c4c8', image: '/media/modelos/colores/adventure-plata-mate.webp' },
+      { id: 'gris-cemento', name: 'Gris cemento', swatch: '#6e7276', image: '/media/modelos/colores/adventure-gris-cemento.webp' },
+      { id: 'azul-marino', name: 'Azul marino', swatch: '#1a2a44', image: '/media/modelos/colores/adventure-azul-marino.webp' },
+    ],
+  },
+  {
+    trim: 'Navigator',
+    colors: [
+      { id: 'azul-blanco', name: 'Azul y blanco', swatch: '#4c9bbd', swatchSecondary: '#f2f2f2', image: '/media/modelos/colores/navigator-azul-blanco.webp' },
+      { id: 'azul', name: 'Azul', swatch: '#2e5a8c', image: '/media/modelos/colores/navigator-azul.webp' },
+      { id: 'gris', name: 'Gris', swatch: '#8a8e92', image: '/media/modelos/colores/navigator-gris.webp' },
+      { id: 'blanco', name: 'Blanco', swatch: '#f2f2f2', image: '/media/modelos/colores/navigator-blanco.webp' },
+      { id: 'negro', name: 'Negro', swatch: '#1c1c1c', image: '/media/modelos/colores/navigator-negro.webp' },
+    ],
+  },
+]
+
 export const dealer = {
-  brand: 'Yooudooo 212',
+  brand: 'BAW 212',
   region: 'Bizkaia',
   company: 'Oyarzabal Automotive',
   claim: 'El único concesionario en Bizkaia',
@@ -159,7 +205,7 @@ export const dealer = {
   whatsapp: '626 70 73 60',
   // wa.me exige el número sin '+' ni separadores
   whatsappLink: '34626707360',
-  whatsappMessage: 'Hola, me gustaría recibir información sobre el Yooudooo 6.',
+  whatsappMessage: 'Hola, me gustaría recibir información sobre el BAW 212.',
   instagram: 'yooudooo.212.bizkaia',
   instagramUrl: 'https://www.instagram.com/yooudooo.212.bizkaia/',
   street: 'C/ Medina de Pomar 12',

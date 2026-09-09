@@ -9,7 +9,7 @@ interface GarageRevealProps {
 }
 
 /**
- * El Yooudooo de frente esperando en la penumbra: arranca casi invisible y el
+ * El BAW de frente esperando en la penumbra: arranca casi invisible y el
  * scroll lo va sacando de la sombra, como si se encendiera una luz en el garaje.
  */
 export default function GarageReveal({ children }: GarageRevealProps) {

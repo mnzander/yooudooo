@@ -1,22 +1,24 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { X, Fuel, Gauge, Cog, Phone } from 'lucide-react'
-import type { CarModel } from '@/data/models'
+import { X, Phone } from 'lucide-react'
+import { y3max } from '@/data/y3max'
 import { dealer } from '@/data/models'
 import useScrollLock from '@/hooks/useScrollLock'
+import WhatsAppGate from '@/components/WhatsAppGate'
+import { WhatsAppIcon } from '@/components/BrandIcons'
 
-interface ModelModalProps {
-  model: CarModel | null
+interface Y3MaxModalProps {
+  open: boolean
   onClose: () => void
 }
 
-export default function ModelModal({ model, onClose }: ModelModalProps) {
+export default function Y3MaxModal({ open, onClose }: Y3MaxModalProps) {
   const closeRef = useRef<HTMLButtonElement>(null)
 
-  useScrollLock(Boolean(model))
+  useScrollLock(open)
 
   useEffect(() => {
-    if (!model) return
+    if (!open) return
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -26,69 +28,70 @@ export default function ModelModal({ model, onClose }: ModelModalProps) {
     closeRef.current?.focus()
 
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [model, onClose])
+  }, [open, onClose])
 
-  if (!model) return null
+  if (!open) return null
 
-  const quickFacts = [
-    { icon: Gauge, label: 'Potencia', value: `${model.power} CV` },
-    { icon: Fuel, label: 'Combustible', value: model.fuel },
-    { icon: Cog, label: 'Consumo', value: model.consumption },
-  ]
-
-  // Al body: el bloque claro que contiene esta sección crea contexto de
-  // apilamiento con z-10 y el pie es un hermano con z-20, así que desde dentro
-  // ningún z-index puede ganarle y el modal quedaba tapado por el pie.
+  // Al body por el mismo motivo que ModelModal: desde dentro del bloque claro
+  // (z-10) ningún z-index gana al pie (z-20), que es hermano suyo.
   return createPortal(
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={`Especificaciones ${model.name} ${model.trim} ${model.fuel}`}
+      aria-label={`Información del ${y3max.name}`}
       className="fixed inset-0 z-100 flex items-end justify-center overflow-y-auto bg-ink/85 p-0 backdrop-blur-md duration-300 animate-in fade-in sm:items-center sm:p-6"
       onMouseDown={e => {
         if (e.target === e.currentTarget) onClose()
       }}
     >
       <div className="relative w-full max-w-3xl overflow-hidden rounded-t-3xl border border-ink-line bg-ink-soft duration-500 animate-in slide-in-from-bottom-8 sm:rounded-3xl">
-        <div className="relative h-52 overflow-hidden sm:h-64">
+        <div
+          className="relative"
+          style={{
+            backgroundImage:
+              'radial-gradient(ellipse 62% 52% at 50% 42%, #33372c 0%, #1b1d18 45%, transparent 72%)',
+          }}
+        >
           <img
-            className="size-full object-cover"
-            src={model.image}
-            alt={`${model.name} ${model.trim} ${model.fuel}`}
+            src={y3max.image}
+            alt={`${y3max.name}, híbrido enchufable, vista tres cuartos delantera`}
+            className="mx-auto block w-full max-w-lg px-6 py-8"
+            decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-soft via-ink-soft/30 to-transparent" />
 
           <button
             ref={closeRef}
             onClick={onClose}
-            aria-label="Cerrar especificaciones"
+            aria-label="Cerrar información"
             className="absolute top-4 right-4 rounded-full border border-white/20 bg-ink/60 p-2.5 text-white backdrop-blur-sm transition-colors duration-300 hover:border-lime hover:bg-lime hover:text-ink"
           >
             <X className="size-4" />
           </button>
 
-          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+          <div className="px-6 pb-6 sm:px-8">
             <span className="text-xs font-semibold tracking-[0.25em] text-lime uppercase">
-              {model.trim} · {model.fuel}
+              {y3max.kind}
             </span>
-            <h3 className="mt-2 text-3xl text-white sm:text-4xl">{model.name}</h3>
+            <h3 className="mt-2 text-3xl text-white sm:text-4xl">{y3max.name}</h3>
           </div>
         </div>
 
         <div className="max-h-[55vh] overflow-y-auto overscroll-contain px-6 pb-8 sm:px-8">
-          <div className="grid grid-cols-3 gap-3 border-b border-ink-line py-6">
-            {quickFacts.map(fact => (
+          <div className="grid grid-cols-2 gap-3 border-b border-ink-line py-6 sm:grid-cols-4">
+            {y3max.highlights.map(fact => (
               <div key={fact.label} className="rounded-xl bg-ink-card/70 p-4">
-                <fact.icon className="size-4 text-lime" strokeWidth={1.8} />
-                <p className="mt-3 text-xs tracking-[0.15em] text-white/55 uppercase">
+                <p className="text-accent-italic text-3xl leading-none text-lime">
+                  {fact.value}
+                  <span className="ml-1 text-[0.45em]">{fact.unit}</span>
+                </p>
+                <p className="mt-3 text-xs leading-snug tracking-[0.12em] text-white/55 uppercase">
                   {fact.label}
                 </p>
-                <p className="mt-1 text-sm font-semibold text-white">{fact.value}</p>
               </div>
             ))}
           </div>
 
-          {model.specs.map(group => (
+          {y3max.specs.map(group => (
             <div key={group.group} className="border-b border-ink-line py-6 last:border-0">
               <h4 className="text-sm tracking-[0.15em] text-lime">{group.group}</h4>
               <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
@@ -105,13 +108,19 @@ export default function ModelModal({ model, onClose }: ModelModalProps) {
             </div>
           ))}
 
-          <a
-            href={`tel:${dealer.phoneLink}`}
-            className="mt-6 flex items-center justify-center gap-2.5 rounded-full bg-lime px-6 py-4 text-sm font-bold tracking-wide text-ink uppercase transition-colors duration-300 hover:bg-lime-bright"
-          >
-            <Phone className="size-4" strokeWidth={2.4} />
-            Consultar disponibilidad · {dealer.phone}
-          </a>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={`tel:${dealer.phoneLink}`}
+              className="flex min-h-11 flex-1 items-center justify-center gap-2.5 rounded-full bg-lime px-6 py-4 text-sm font-bold tracking-wide text-ink uppercase transition-colors duration-300 hover:bg-lime-bright"
+            >
+              <Phone className="size-4" strokeWidth={2.4} />
+              {dealer.phone}
+            </a>
+            <WhatsAppGate className="flex min-h-11 flex-1 items-center justify-center gap-2.5 rounded-full border border-white/25 px-6 py-4 text-sm font-bold tracking-wide text-white uppercase transition-all duration-300 hover:border-lime hover:text-lime">
+              <WhatsAppIcon className="size-4" />
+              WhatsApp
+            </WhatsAppGate>
+          </div>
         </div>
       </div>
     </div>,

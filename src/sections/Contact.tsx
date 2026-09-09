@@ -42,7 +42,7 @@ export default function Contact() {
       <SectionHeading index="03" label="Contacto" title="Hablemos" tone="light" />
 
       <p className="relative mt-8 max-w-2xl text-base leading-relaxed text-ink/70">
-        Resolvemos tus dudas sobre cualquiera de las tres versiones del Yooudooo 6, concertamos una
+        Resolvemos tus dudas sobre cualquiera de las tres versiones del BAW 212, concertamos una
         prueba sin compromiso o te preparamos una oferta a medida.
       </p>
 

@@ -102,7 +102,7 @@ export default function Hero() {
         mediaType={source.type}
         src={source.src}
         poster="/media/hero-poster.jpg"
-        alt="Yooudooo 6 circulando por el monte"
+        alt="BAW 212 circulando por el monte"
         startWidth={frame.width}
         startHeight={frame.height}
         startRadius={frame.radius}
@@ -118,7 +118,7 @@ export default function Hero() {
                 {dealer.company}
               </span>
               <span className="font-display leading-[0.9] font-black tracking-[-0.04em] uppercase">
-                Yooudooo <span className="text-lime">212</span>
+                BAW <span className="text-lime">212</span>
               </span>
             </span>
           )
@@ -134,7 +134,7 @@ export default function Hero() {
       >
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7">
           <span className="flex items-center gap-2 rounded-full border border-lime/40 bg-lime/10 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-lime uppercase backdrop-blur-sm">
-            Yooudooo 6
+            BAW 212
             <span aria-hidden className="text-lime/70">·</span>
             <RotatingText
               texts={['Gasolina', 'Diésel', 'Navigator']}
@@ -152,7 +152,7 @@ export default function Hero() {
           </h1>
 
           <BlurText
-            text={`Venta oficial del Yooudooo 6 con ${dealer.warrantyYears} años de garantía y servicio postventa propio en Bilbao.`}
+            text={`Venta oficial del BAW 212 con ${dealer.warrantyYears} años de garantía y servicio postventa propio en Bilbao.`}
             animateBy="words"
             direction="bottom"
             delay={45}

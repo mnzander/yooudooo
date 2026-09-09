@@ -18,7 +18,7 @@ export default function About() {
             containerClassName="!my-0"
             textClassName="!text-[clamp(1.6rem,2.6vw,2.15rem)] !font-black !leading-[1.15] !tracking-tight !normal-case font-display text-white"
           >
-            {'El único concesionario oficial de Yooudooo en Bizkaia'}
+            {'El único concesionario oficial de BAW en Bizkaia'}
           </ScrollReveal>
 
           <AnimatedContent distance={60} duration={0.9} delay={0.1}>
@@ -43,13 +43,13 @@ export default function About() {
           <figure className="relative h-full min-h-[22rem] overflow-hidden rounded-3xl border border-ink-line">
             <img
               src="/media/modelos/y6-gasolina.jpg"
-              alt="Yooudooo 6 en versión gasolina sobre terreno de arena"
+              alt="BAW 212 en versión gasolina sobre terreno de arena"
               className="size-full object-cover"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
             <figcaption className="absolute inset-x-0 bottom-0 p-6 text-sm text-white/70">
-              Yooudooo 6 · {dealer.street}, {dealer.city}
+              BAW 212 · {dealer.street}, {dealer.city}
             </figcaption>
           </figure>
         </AnimatedContent>

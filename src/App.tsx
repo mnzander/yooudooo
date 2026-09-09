@@ -9,6 +9,7 @@ import Stats from '@/sections/Stats'
 import About from '@/sections/About'
 import Products from '@/sections/Products'
 import Contact from '@/sections/Contact'
+import Suggestion from '@/sections/Suggestion'
 import Footer from '@/sections/Footer'
 
 export default function App() {
@@ -57,6 +58,7 @@ export default function App() {
         <div className="relative z-10 -mt-6 rounded-t-[2rem] bg-bone text-ink shadow-[0_-30px_60px_-30px_rgba(0,0,0,0.8)] sm:-mt-10 sm:rounded-t-[3.5rem]">
           <Products />
           <Contact />
+          <Suggestion />
         </div>
       </main>
 

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { dealer } from '@/data/models'
 import { WhatsAppIcon } from '@/components/BrandIcons'
+import useScrollLock from '@/hooks/useScrollLock'
 
 type Status = 'idle' | 'checking' | 'verified'
 
@@ -37,18 +38,17 @@ function GateDialog({ onClose }: { onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null)
   const timerRef = useRef<number>(0)
 
+  useScrollLock(true)
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
 
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
     document.addEventListener('keydown', onKeyDown)
     closeRef.current?.focus()
 
     return () => {
-      document.body.style.overflow = previousOverflow
       document.removeEventListener('keydown', onKeyDown)
       window.clearTimeout(timerRef.current)
     }
@@ -86,6 +86,20 @@ function GateDialog({ onClose }: { onClose: () => void }) {
         <p className="mt-3 text-sm leading-relaxed text-white/60">
           Confirma que no eres un robot. Es un paso rápido que usamos para evitar el spam
           automatizado en nuestro WhatsApp.
+        </p>
+
+        <p className="mt-5 flex items-center gap-3 rounded-xl border border-lime/25 bg-lime/10 px-4 py-3 text-sm leading-snug font-bold text-lime">
+          {/* Bandera en SVG y no emoji: Windows no dibuja los emojis de bandera
+              de país y en su lugar aparecen las letras «ES». */}
+          <svg
+            viewBox="0 0 9 6"
+            aria-hidden="true"
+            className="h-3.5 w-5 shrink-0 rounded-[2px] border border-white/15"
+          >
+            <rect width="9" height="6" fill="#aa151b" />
+            <rect y="1.5" width="9" height="3" fill="#f1bf00" />
+          </svg>
+          Atendemos consultas únicamente desde España.
         </p>
 
         <button

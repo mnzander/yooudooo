@@ -4,6 +4,7 @@ import BlurText from '@/components/BlurText'
 import SpotlightCard from '@/components/SpotlightCard'
 import SectionHeading from '@/components/SectionHeading'
 import ModelModal from '@/components/ModelModal'
+import ColorShowcase from '@/components/ColorShowcase'
 import { models, type CarModel } from '@/data/models'
 
 export default function Products() {
@@ -11,7 +12,7 @@ export default function Products() {
 
   return (
     <section id="productos" className="relative mx-auto max-w-7xl px-6 pt-20 pb-28 sm:pt-28 sm:pb-36">
-      <SectionHeading index="02" label="Productos" title="Yooudooo 6" tone="light" />
+      <SectionHeading index="02" label="Productos" title="BAW 212" tone="light" />
 
       <BlurText
         text="Tres versiones del mismo todoterreno: dos de gasolina y una diésel. Elige la que mejor encaje con tu día a día y consulta la ficha técnica completa."
@@ -38,7 +39,7 @@ export default function Products() {
                   <img
                     className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     src={model.image}
-                    alt={`Yooudooo 6 ${model.trim} ${model.fuel}`}
+                    alt={`${model.name} ${model.trim} ${model.fuel}`}
                     loading="lazy"
                   />
 
@@ -94,6 +95,10 @@ export default function Products() {
           </AnimatedContent>
         ))}
       </div>
+
+      <AnimatedContent distance={70} duration={0.9}>
+        <ColorShowcase />
+      </AnimatedContent>
 
       <ModelModal model={selected} onClose={() => setSelected(null)} />
     </section>

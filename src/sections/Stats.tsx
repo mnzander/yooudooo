@@ -9,7 +9,7 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section aria-label="Cifras de Yooudooo 212 Bizkaia" className="relative">
+    <section aria-label="Cifras de BAW 212 Bizkaia" className="relative">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-12 px-6 py-20 sm:grid-cols-3 sm:py-24">
         {stats.map(stat => (
           <div key={stat.label} className="text-center">
