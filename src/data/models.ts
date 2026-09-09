@@ -156,6 +156,12 @@ export const dealer = {
   claim: 'El único concesionario en Bizkaia',
   phone: '946 857 505',
   phoneLink: '+34946857505',
+  whatsapp: '626 70 73 60',
+  // wa.me exige el número sin '+' ni separadores
+  whatsappLink: '34626707360',
+  whatsappMessage: 'Hola, me gustaría recibir información sobre el Yooudooo 6.',
+  instagram: 'yooudooo.212.bizkaia',
+  instagramUrl: 'https://www.instagram.com/yooudooo.212.bizkaia/',
   street: 'C/ Medina de Pomar 12',
   city: 'Bilbao',
   zip: '48012',

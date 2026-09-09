@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Phone, Menu, X } from 'lucide-react'
+import WhatsAppGate from '@/components/WhatsAppGate'
+import { WhatsAppIcon } from '@/components/BrandIcons'
 import { dealer } from '@/data/models'
 
 const links = [
@@ -69,6 +71,13 @@ export default function Nav() {
             <Phone className="size-4" strokeWidth={2.4} />
             <span className="hidden sm:inline">{dealer.phone}</span>
           </a>
+
+          {/* Neutro a propósito: el lima queda reservado para la llamada, que
+              sigue siendo la acción principal del concesionario. */}
+          <WhatsAppGate className="grid size-11 place-items-center rounded-full border border-white/15 text-white transition-colors duration-300 hover:border-lime hover:text-lime">
+            <WhatsAppIcon className="size-4" />
+            <span className="sr-only">Escribir por WhatsApp</span>
+          </WhatsAppGate>
 
           <button
             type="button"

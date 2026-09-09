@@ -2,6 +2,8 @@ import { Phone, ShieldCheck, Wrench, MapPin, ArrowUpRight } from 'lucide-react'
 import AnimatedContent from '@/components/AnimatedContent'
 import ShinyText from '@/components/ShinyText'
 import SectionHeading from '@/components/SectionHeading'
+import WhatsAppGate from '@/components/WhatsAppGate'
+import { WhatsAppIcon } from '@/components/BrandIcons'
 import { dealer } from '@/data/models'
 
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -84,6 +86,10 @@ export default function Contact() {
                 <Phone className="size-4" strokeWidth={2.4} />
                 Llamar ahora
               </a>
+              <WhatsAppGate className="flex min-h-11 items-center gap-2.5 rounded-full border border-white/25 px-7 text-sm font-bold tracking-wide text-white uppercase transition-all duration-300 hover:border-lime hover:text-lime">
+                <WhatsAppIcon className="size-4" />
+                WhatsApp
+              </WhatsAppGate>
               <a
                 href={mapsUrl}
                 target="_blank"
