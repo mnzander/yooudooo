@@ -1,0 +1,52 @@
+# Configuración de Apache para el hosting de Arsys (Linux).
+#
+# CUIDADO: el bloque de redirecciones fuerza HTTPS. Si se sube este fichero
+# antes de que el certificado esté instalado y funcionando, la web queda
+# inaccesible en un bucle de redirección hacia un HTTPS que no responde.
+# Instalar primero el certificado (Panel de control > WEB > SSL) y subir esto
+# después.
+
+RewriteEngine On
+
+# Una sola dirección buena: baw212spain.com por HTTPS. Este bloque resuelve de
+# golpe los tres casos —entrar por http, por www o por el dominio .es— y evita
+# que la misma web responda en varias direcciones, que es lo que Google
+# interpreta como contenido duplicado.
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^baw212spain\.com$ [NC]
+RewriteRule ^ https://baw212spain.com%{REQUEST_URI} [L,R=301]
+
+# Comprimir lo que es texto. Las imágenes, los vídeos y las tipografías woff2
+# ya vienen comprimidos y volver a pasarlos por aquí sólo gasta CPU.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Vite pone un hash en el nombre de cada fichero de assets: si el contenido
+  # cambia, cambia el nombre. Por eso se pueden guardar para siempre sin riesgo
+  # de servir una versión vieja. Sin CDN detrás, esta caché es lo que más se
+  # nota en las visitas repetidas.
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # El material sí conserva su nombre al cambiar, así que se cachea una semana:
+  # suficiente para no descargar el vídeo en cada visita y poco para que una
+  # foto nueva tarde en verse.
+  <FilesMatch "\.(jpg|jpeg|png|webp|svg|mp4)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # El index no se cachea: es quien apunta a los assets con hash, y si se queda
+  # congelado el navegador seguiría pidiendo la versión anterior de la web.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+# Sin listados de directorio: sin esto, entrar en /media/ enseñaría el índice
+# de ficheros.
+Options -Indexes
