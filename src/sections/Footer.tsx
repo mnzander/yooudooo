@@ -97,9 +97,27 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col-reverse items-start justify-between gap-6 border-t border-ink-line pt-8 sm:flex-row sm:items-center">
-          <p className="text-xs text-white/55">
-            © {new Date().getFullYear()} {dealer.company}. Todos los derechos reservados.
-          </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+            <p className="text-xs text-white/55">
+              © {new Date().getFullYear()} {dealer.company}. Todos los derechos reservados.
+            </p>
+            {/* Páginas HTML sueltas en public/: la web no tiene enrutador y así
+                no hacen falta reglas de reescritura en el hosting. */}
+            <nav aria-label="Información legal" className="flex items-center gap-5">
+              <a
+                href="/aviso-legal.html"
+                className="text-xs text-white/55 underline-offset-4 transition-colors duration-300 hover:text-lime hover:underline"
+              >
+                Aviso legal
+              </a>
+              <a
+                href="/politica-privacidad.html"
+                className="text-xs text-white/55 underline-offset-4 transition-colors duration-300 hover:text-lime hover:underline"
+              >
+                Política de privacidad
+              </a>
+            </nav>
+          </div>
 
           <a
             href="#inicio"
