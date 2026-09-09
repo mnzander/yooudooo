@@ -10,11 +10,19 @@
       name="description"
       content="Oyarzabal Automotive, único concesionario oficial BAW en Bizkaia. BAW 212 en gasolina y diésel con 5 años de garantía y servicio postventa en Bilbao. Tel. 946 857 505."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Primera imagen que se ve: se pide ya, para acortar el negro inicial
          mientras el vídeo aún no tiene fotograma. -->
     <link rel="preload" as="image" href="/media/hero-poster.jpg" fetchpriority="high" />
+    <!-- Las tipografías son propias: adelantarlas evita el salto de la fuente
+         de reserva a la definitiva. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-variable.woff2" crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/archivo-variable.woff2"
+      crossorigin
+    />
   </head>
   <body>
     <div id="root"></div>

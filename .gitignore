@@ -28,6 +28,7 @@ dist-ssr
 /media/
 /media.zip
 
-# Los vídeos servidos sí se versionan: ya van comprimidos (3,3 MB y 1,2 MB) y
-# sin ellos el hero se queda en negro al clonar. Se regeneran con
-# `npm run encode:hero` a partir del original en /media.
+# Los vídeos servidos sí se versionan: sin ellos el hero se queda en negro al
+# clonar. Se regeneran con `npm run encode:hero` a partir del original en
+# /media. Pesan 8,8 MB el de escritorio y 3,7 MB el de móvil, así que conviene
+# vigilarlos: son con diferencia lo más pesado que descarga la web.

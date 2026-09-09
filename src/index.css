@@ -1,6 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..900;1,400..900&family=Inter:wght@300..700&family=Anton&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
+
+/* Tipografías servidas desde el propio dominio en vez de desde Google: así la
+   web no hace ninguna petición a terceros y nadie ajeno recibe la IP de quien
+   visita. Los ficheros salen de Fontsource (licencia SIL Open Font) y están en
+   public/fonts.
+
+   Se usan las variantes variables del eje de grosor, que son las más ligeras:
+   la web no cambia la anchura ni el tamaño óptico. Tampoco hay cursivas reales
+   —el efecto inclinado se hace con transform— así que no se descargan. */
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/archivo-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/anton-400.woff2') format('woff2');
+}
 
 @theme {
   /* Marca BAW 212 Bizkaia — extraída del rotulado del vehículo */
