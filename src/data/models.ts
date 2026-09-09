@@ -208,7 +208,7 @@ export const dealer = {
   whatsappMessage: 'Hola, me gustaría recibir información sobre el BAW 212.',
   instagram: 'yooudooo.212.bizkaia',
   instagramUrl: 'https://www.instagram.com/yooudooo.212.bizkaia/',
-  street: 'C/ Medina de Pomar 12',
+  street: 'C/ Medina de Pomar 3',
   city: 'Bilbao',
   zip: '48012',
   warrantyYears: 5,
