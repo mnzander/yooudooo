@@ -11,10 +11,15 @@
  * se publicaba entero. Recodificar desde un máster de buena calidad es
  * imperceptible y sí permite controlar el resultado.
  *
- * Se baja a 1440 de ancho: el hero lleva un oscurecido del 60 % encima, así que
- * el detalle fino no se aprecia y bajar resolución rinde más que apretar la
- * compresión. Se mantienen los 30 fps del máster —convertir a 25 obliga a
- * descartar uno de cada seis fotogramas y provoca un tirón irregular.
+ * Se conserva el ancho del máster. No se puede bajar resolución en escritorio
+ * aunque el hero lleve un oscurecido encima: el marco pequeño del inicio no
+ * encoge el vídeo, lo recorta, y el vídeo entra ampliado al 145 % (ver mediaZoom
+ * en Hero.tsx). En una pantalla de 1920 eso significa dibujarlo a 2784 px, así
+ * que cualquier reducción se ve pixelada justo al arrancar. Probado a 1440: se
+ * nota.
+ *
+ * Se mantienen los 30 fps del máster —convertir a 25 obliga a descartar uno de
+ * cada seis fotogramas y provoca un tirón irregular.
  *
  * Uso: node scripts/encode-hero.mjs "media/Video WEB Definitivo.mp4"
  */
@@ -26,12 +31,14 @@ const input = process.argv[2] ?? 'media/Video WEB Definitivo.mp4'
 const run = args => execFileSync(ffmpeg, ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' })
 const size = f => `${(statSync(f).size / 1048576).toFixed(2)} MB`
 
-// Escritorio: 1440 de ancho, sin audio y con el índice al principio para poder
-// empezar a reproducir antes de terminar la descarga.
+// Escritorio: resolución del máster, sin audio y con el índice al principio
+// para poder empezar a reproducir antes de terminar la descarga. El preset
+// veryslow tarda más en codificar pero da el mismo resultado en menos bytes, y
+// esto se ejecuta una vez por vídeo.
 run(['-i', input, '-an',
-  '-vf', 'scale=1440:-2:flags=lanczos,format=yuv420p',
+  '-vf', 'format=yuv420p',
   '-c:v', 'libx264', '-profile:v', 'high', '-level', '4.0',
-  '-preset', 'slow', '-crf', '26', '-g', '60',
+  '-preset', 'veryslow', '-crf', '24', '-g', '60',
   '-movflags', '+faststart', 'public/media/hero.mp4'])
 console.log(`public/media/hero.mp4 → ${size('public/media/hero.mp4')}`)
 
