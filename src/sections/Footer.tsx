@@ -1,4 +1,4 @@
-import { Phone, MapPin, ArrowUpRight, ArrowUp } from 'lucide-react'
+import { Phone, Mail, MapPin, ArrowUpRight, ArrowUp } from 'lucide-react'
 import WhatsAppGate from '@/components/WhatsAppGate'
 import { InstagramIcon, WhatsAppIcon } from '@/components/BrandIcons'
 import { dealer } from '@/data/models'
@@ -78,7 +78,15 @@ export default function Footer() {
               <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-white/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-lime" />
             </a>
 
-            <WhatsAppGate className="mt-3 flex min-h-11 items-center gap-3 text-sm text-white/75 transition-colors duration-300 hover:text-lime">
+            <a
+              href={`mailto:${dealer.email}`}
+              className="mt-3 flex min-h-11 items-center gap-3 text-sm break-all text-white/75 transition-colors duration-300 hover:text-lime"
+            >
+              <Mail className="size-4 shrink-0" strokeWidth={1.8} />
+              {dealer.email}
+            </a>
+
+            <WhatsAppGate className="flex min-h-11 items-center gap-3 text-sm text-white/75 transition-colors duration-300 hover:text-lime">
               <WhatsAppIcon className="size-4 shrink-0" />
               WhatsApp
             </WhatsAppGate>

@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "yooudooo-web",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "C:\\Users\\Ander\\AppData\\Local\\Temp\\claude\\D--Backpack-Documentos-Programaci-n-yooudoo-yooudooo\\858da092-e7f2-4653-b8a0-dec6d895ab8d\\scratchpad\\dev.cmd",
+      "runtimeArgs": [],
       "port": 5173
     }
   ]

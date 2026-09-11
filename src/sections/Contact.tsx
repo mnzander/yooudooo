@@ -1,4 +1,4 @@
-import { Phone, ShieldCheck, Wrench, MapPin, ArrowUpRight } from 'lucide-react'
+import { Phone, Mail, ShieldCheck, Wrench, MapPin, ArrowUpRight } from 'lucide-react'
 import AnimatedContent from '@/components/AnimatedContent'
 import ShinyText from '@/components/ShinyText'
 import SectionHeading from '@/components/SectionHeading'
@@ -73,7 +73,18 @@ export default function Contact() {
               />
             </a>
 
-            <p className="relative mt-6 max-w-sm text-base leading-relaxed text-white/60">
+            {/* La dirección se muestra entera en lugar de esconderla tras un
+                botón: quien prefiere escribir suele querer copiarla o verla
+                antes de decidir. */}
+            <a
+              href={`mailto:${dealer.email}`}
+              className="relative mt-4 inline-flex min-h-11 items-center gap-2.5 text-base break-all text-white/70 transition-colors duration-300 hover:text-lime"
+            >
+              <Mail className="size-4 shrink-0" strokeWidth={1.8} />
+              {dealer.email}
+            </a>
+
+            <p className="relative mt-4 max-w-sm text-base leading-relaxed text-white/60">
               Te atendemos personalmente y sin prisas. Si lo prefieres, pásate por el concesionario
               y lo vemos con calma.
             </p>
